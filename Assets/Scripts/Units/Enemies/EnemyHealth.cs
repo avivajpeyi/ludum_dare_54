@@ -75,6 +75,7 @@ public class EnemyHealth : MonoBehaviour
     void Death()
     {
         isDead = true;
+        EnemySpawner.DecreaseEnemyCount();
 
         hitboxCollider.isTrigger = true;
 
