@@ -10,8 +10,9 @@ public class PlayerStats : Singleton<PlayerStats>
     float currentSpeed = 0;
     static float currentDamage = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         currentSpeed = baseSpeed;
         currentDamage = baseDamage;
         PlayerPerkEvents.eventBuffDamage += BuffDamage;

@@ -8,11 +8,15 @@ public class PlayerLevel : Singleton<PlayerLevel>
 {
     public static int currentLevel = 1;
     public static int currentXP = 0;
-    public static int XPneeded => Mathf.Max(100,currentLevel * 10);
-
     
-    // Make level up event
-    public static event Action OnLevelUp;
+
+    public static int XPneeded => Mathf.Max(10,currentLevel * 10);
+    
+    
+    // On Increase XP Action
+    public static Action OnIncreaseXP;
+    
+    
 
     static void LevelUp()
     {
@@ -23,12 +27,13 @@ public class PlayerLevel : Singleton<PlayerLevel>
     }
 
 
-    public static void IncreaseXP(int amount)
+    public void IncreaseXP(int amount)
     {
         currentXP += amount;
         if (currentXP >= XPneeded)
         {
             LevelUp();
         }
+        OnIncreaseXP?.Invoke();
     }
 }

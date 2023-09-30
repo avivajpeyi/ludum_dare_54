@@ -6,7 +6,6 @@
 [RequireComponent(typeof(Light))]
 public class PlayerShooting : AttackerBase
 {
-    private PlayerStats playerStats;
     public float damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
@@ -34,7 +33,6 @@ public class PlayerShooting : AttackerBase
         gunLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
-        playerStats = GetComponentInParent<PlayerStats>();
     }
 
 
@@ -87,8 +85,8 @@ public class PlayerShooting : AttackerBase
             EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage((damagePerShot + playerStats.GetCurrentDamage()),
-                    shootHit.point);
+                float dmg = damagePerShot + PlayerStats.Instance.GetCurrentDamage();
+                enemyHealth.TakeDamage(dmg, shootHit.point);
             }
 
             gunLine.SetPosition(1, shootHit.point);

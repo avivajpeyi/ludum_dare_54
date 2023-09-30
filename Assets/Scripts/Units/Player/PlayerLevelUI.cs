@@ -12,17 +12,19 @@ public class PlayerLevelUI : MonoBehaviour
     private void Awake()
     {
         GameManager.OnAfterStateChanged += OnStateChanged;
+        PlayerLevel.OnIncreaseXP += UpdateLvlTxt;
     }
 
     private void OnDestroy()
     {
         GameManager.OnAfterStateChanged -= OnStateChanged;
+        PlayerLevel.OnIncreaseXP -= UpdateLvlTxt;
     }
 
 
     private void OnStateChanged(GameState newState)
     {
-        if (newState == GameState.InGame) SetTxt();
+        if (newState == GameState.InGame) UpdateLvlTxt();
         else txt.text = "";
     }
 
@@ -33,7 +35,7 @@ public class PlayerLevelUI : MonoBehaviour
     }
 
 
-    void SetTxt()
+    public void UpdateLvlTxt()
     {
         txt.text = String.Format(
             "LVL: {0:00} [{1:000}/{2:000}]",

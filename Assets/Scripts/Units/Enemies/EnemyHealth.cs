@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameManager.Instance;
         
         _canTakeDamage = gameManager.State == GameState.InGame;
     }

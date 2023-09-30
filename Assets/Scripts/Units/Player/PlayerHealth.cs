@@ -29,8 +29,9 @@ public class PlayerHealth : Singleton<PlayerHealth>
 
     private bool _canTakeDamage = false;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         GameManager.OnBeforeStateChanged += OnStateChanged;
         SetInitReferences();
     }
