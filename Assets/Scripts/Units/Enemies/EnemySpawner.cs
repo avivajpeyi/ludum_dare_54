@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : StaticInstance<EnemySpawner>
 {
@@ -15,6 +17,19 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
 
     [SerializeField] public static int currentEnemyCount = 0;
 
+    private bool _canSpawn = false;
+
+
+    private void Awake() => GameManager.OnBeforeStateChanged += OnStateChanged;
+
+    private void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
+
+    private void OnStateChanged(GameState newState)
+    {
+        if (newState == GameState.InGame) StartCoroutine("SpawnEnemyCoroutine");
+        else StopCoroutine("SpawnEnemyCoroutine");
+    }
+
 
     void SpawnEnemy()
     {
@@ -22,6 +37,7 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
         {
             return;
         }
+
         int randomIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
         Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex].position,
@@ -29,9 +45,13 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
         currentEnemyCount++;
     }
 
-    void Start()
+    IEnumerator SpawnEnemyCoroutine()
     {
-        InvokeRepeating("SpawnEnemy", 0, spawnDelay);
+        while (true)
+        {
+            SpawnEnemy();
+            yield return new WaitForSeconds(spawnDelay);
+        }
     }
 
 

@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MovementBase
 {
     Transform player;
     PlayerHealth playerHealth;
@@ -9,23 +10,46 @@ public class EnemyMovement : MonoBehaviour
     UnityEngine.AI.NavMeshAgent nav;
 
 
-    void Awake ()
+    protected override void SetInitReferences()
     {
-        player = GameObject.FindGameObjectWithTag ("Player").transform;
-        playerHealth = player.GetComponent <PlayerHealth> ();
-        enemyHealth = GetComponent <EnemyHealth> ();
-        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
-    
-    void Update ()
+
+    private void Start()
     {
-        if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        _canMove = GameManager.Instance.State == GameState.InGame;
+    }
+
+    void Update()
+    {
+        Move();
+    }
+
+
+    public void DisableMovement()
+    {
+        _canMove = false;
+        
+    }
+
+    void Move()
+    {
+        if (enemyHealth.currentHealth > 0 &&
+            playerHealth.currentHealth > 0)
         {
-            nav.SetDestination (player.position);
+            nav.isStopped = false;
+            nav.SetDestination(player.position);
         }
         else
-		{
-        	nav.enabled = false;
+        {
+            nav.isStopped = true;
+            // turn off anim
         }
+        
     }
+
+
 }

@@ -21,36 +21,62 @@ public class PerkManager : MonoBehaviour
     List<PerkBase> currentPerks;
 
     int numberOfPerksToPick = 2;
-
-    private void Awake() {
+    
+    private void Awake()
+    {
         PlayerPerkEvents.eventLevelUp += ToggleUI;
-        ToggleUI();
+        GameManager.OnBeforeStateChanged += OnStateChanged;
+        SetInitReferences();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerPerkEvents.eventLevelUp -= ToggleUI;
+        GameManager.OnBeforeStateChanged -= OnStateChanged;
+    }
+    
+
+    private void OnStateChanged(GameState newState)
+    {
+        if (newState == GameState.InGame)
+        {
+            SetUiActive(false);
+        }
+    }
+    
+    
+
+    private void SetInitReferences() {
+        
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnDestroy() {
-        PlayerPerkEvents.eventLevelUp -= ToggleUI;
+        SetUiActive(false);
     }
     
+
     public void ToggleUI()
     {
-        gameObject.SetActive(!gameObject.activeSelf);
+        SetUiActive(!gameObject.activeSelf);
+    }
+
+    public void DisablePerksUi()
+    {
+        SetUiActive(false);
+    }
+    
+
+    void SetUiActive(bool active)
+    {
+        gameObject.SetActive(active);
         if (gameObject.activeSelf)
         {
             PopulateSelectPerkList();
         }
-        if (!gameObject.activeSelf)
+        if (active)
         {
             foreach (Transform child in selectPerkUI.transform)
             {
@@ -94,25 +120,28 @@ public class PerkManager : MonoBehaviour
         PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
         perkTile.SetPrimaryText(primaryText);
         perkTile.SetSecondaryText(secondaryText);
+        Button perkButton = perkTile.GetComponent<Button>();
+        perkButton.onClick.AddListener(DisablePerksUi);
+        perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
         switch (perkType)
         {
             case PerkType.DamageBuff:
                 DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
-                perkTile.GetComponent<Button>().onClick.AddListener(damageBuff.OnClick);
-                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                perkButton.onClick.AddListener(damageBuff.OnClick);
+                
                 break;
 
             case PerkType.DamageBuffBuff:
                 DamageBuff damageBuffBuff = perkTileObject.AddComponent<DamageBuff>();
                 damageBuffBuff.SetDamageToBuff(2f);
-                perkTile.GetComponent<Button>().onClick.AddListener(damageBuffBuff.OnClick);
-                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                perkButton.onClick.AddListener(damageBuffBuff.OnClick);
+                
                 break;
 
             case PerkType.IncreaseView:
                 IncreaseView increaseView = perkTileObject.AddComponent<IncreaseView>();
-                perkTile.GetComponent<Button>().onClick.AddListener(increaseView.OnClick);
-                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                perkButton.onClick.AddListener(increaseView.OnClick);
+                
                 break;
             
             default:

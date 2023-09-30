@@ -33,6 +33,7 @@ public class PlayerPerkEvents : ScriptableObject
         if (eventLevelUp != null)
         {
             eventLevelUp();
+            GameManager.Instance.ChangeState(GameState.InUpgrades);
         }
     }
 }
