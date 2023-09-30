@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
+    [SerializeField]
     bool  DebugMode = false;
     
     

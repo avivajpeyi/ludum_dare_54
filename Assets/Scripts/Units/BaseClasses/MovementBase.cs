@@ -4,7 +4,7 @@ public class MovementBase : MonoBehaviour
 {
     protected bool _canMove;
     protected GameManager gm;
-    protected Animator anim; 
+    // protected Animator anim; 
 
     private void Awake()
     {
@@ -12,7 +12,7 @@ public class MovementBase : MonoBehaviour
         SetInitReferences();
         gm = FindObjectOfType<GameManager>();
         if (gm.State == GameState.InGame) _canMove = true;
-        anim = GetComponent<Animator>();
+        // anim = GetComponent<Animator>();
 
     }
 
