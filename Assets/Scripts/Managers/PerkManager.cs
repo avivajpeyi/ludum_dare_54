@@ -3,6 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.UI;
+
+public enum PerkType
+{
+    DamageBuff,
+    IncreaseView
+}
 
 public class PerkManager : MonoBehaviour
 {
@@ -51,12 +58,12 @@ public class PerkManager : MonoBehaviour
                 // case number ranges should be based on number of perks and their rarity
                 case 1:
                     // Damage perk
-                    InstantiatePerkTile("DMG+", "", selectPerkUI.transform);
+                    InstantiatePerkTile("DMG+", "", selectPerkUI.transform, PerkType.DamageBuff);
                     break;
 
                 case 2:
                     // Increase view perk
-                    InstantiatePerkTile("View+", "", selectPerkUI.transform);
+                    InstantiatePerkTile("View+", "", selectPerkUI.transform, PerkType.IncreaseView);
                     break;
                 
                 default:
@@ -66,12 +73,29 @@ public class PerkManager : MonoBehaviour
         }
     }
 
-    void InstantiatePerkTile(string primaryText, string secondaryText, Transform parent)
+    void InstantiatePerkTile(string primaryText, string secondaryText, Transform parent, PerkType perkType)
     {
         GameObject perkTileObject = Instantiate(perkTilePrefab, parent);
         PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
         perkTile.SetPrimaryText(primaryText);
         perkTile.SetSecondaryText(secondaryText);
+        switch (perkType)
+        {
+            case PerkType.DamageBuff:
+                DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
+                perkTile.GetComponent<Button>().onClick.AddListener(damageBuff.OnClick);
+                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                break;
 
+            case PerkType.IncreaseView:
+                IncreaseView increaseView = perkTileObject.AddComponent<IncreaseView>();
+                perkTile.GetComponent<Button>().onClick.AddListener(increaseView.OnClick);
+                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                break;
+            
+            default:
+                Debug.Log("InstantiatePerkTile switch fell through...");
+                break;
+        }
     }
 }
