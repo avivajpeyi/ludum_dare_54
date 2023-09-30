@@ -116,9 +116,7 @@ public class PerkManager : MonoBehaviour
 
     void InstantiatePerkTile(string primaryText, string secondaryText, Transform parent, PerkType perkType)
     {
-        Debug.Log("InstantiatePerkTile");
         GameObject perkTileObject = Instantiate(perkTilePrefab, parent);
-        Debug.Log(perkTileObject);
         PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
         perkTile.SetPrimaryText(primaryText);
         perkTile.SetSecondaryText(secondaryText);
