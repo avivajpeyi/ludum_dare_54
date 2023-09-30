@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyAttack : AttackerBase
@@ -15,6 +16,10 @@ public class EnemyAttack : AttackerBase
     bool playerInRange;
     float timer;
 
+    private void Start()
+    {
+        _canAttack = GameManager.Instance.State == GameState.InGame; 
+    }
 
     public override void SetInitReferences()
     {

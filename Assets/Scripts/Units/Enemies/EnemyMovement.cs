@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class EnemyMovement : MovementBase
@@ -17,22 +18,38 @@ public class EnemyMovement : MovementBase
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
+    private void Start()
+    {
+        _canMove = GameManager.Instance.State == GameState.InGame;
+    }
+
     void Update()
     {
         Move();
     }
 
+
+    public void DisableMovement()
+    {
+        _canMove = false;
+        
+    }
+
     void Move()
     {
-        if (_canMove &&
-            enemyHealth.currentHealth > 0 && 
+        if (enemyHealth.currentHealth > 0 &&
             playerHealth.currentHealth > 0)
         {
+            nav.isStopped = false;
             nav.SetDestination(player.position);
         }
         else
         {
-            nav.enabled = false;
+            nav.isStopped = true;
+            // turn off anim
         }
+        
     }
+
+
 }

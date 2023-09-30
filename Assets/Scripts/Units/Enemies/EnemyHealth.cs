@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent (typeof (ParticleSystem))]
 [RequireComponent (typeof (AudioSource))]
@@ -41,8 +42,12 @@ public class EnemyHealth : MonoBehaviour
         if (newState == GameState.InGame) _canTakeDamage = true;
         else _canTakeDamage = false;
     }
-    
-    
+
+    private void Start()
+    {
+        _canTakeDamage = GameManager.Instance.State == GameState.InGame; 
+    }
+
 
     void SetInitReferences()
     {
@@ -109,7 +114,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void StartSinking()
     {
-        GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+        GetComponent<EnemyMovement>().DisableMovement();
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
         Destroy(gameObject, 2f);

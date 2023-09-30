@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public static event Action<GameState> OnBeforeStateChanged;
     public static event Action<GameState> OnAfterStateChanged;
@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
                 HandlePause();
                 break;
             case GameState.InGame:
+                HandleInGameState();
+                break;
+            case GameState.InUpgrades:
                 HandleInGameState();
                 break;
             case GameState.GameOver:
@@ -75,6 +78,11 @@ public class GameManager : MonoBehaviour
     {
         PauseManager.gameIsPaused = true;
     }
+    
+    private void HandleInUpgrades()
+    {
+        PauseManager.gameIsPaused = true;
+    }
 
     private void HandleInGameState()
     {
@@ -87,7 +95,7 @@ public class GameManager : MonoBehaviour
         // PauseManager.gameIsPaused = true;
         timeWhenGameOver = Time.time;
     }
-
+    
 
     private void Update()
     {
@@ -106,4 +114,5 @@ public enum GameState
     IsPaused = 1,
     InGame = 2,
     GameOver = 3,
+    InUpgrades = 4,
 }

@@ -2,17 +2,23 @@ using UnityEngine;
 
 public class MovementBase : MonoBehaviour
 {
-    protected bool _canMove = false;
+    protected bool _canMove;
+    protected GameManager gm;
+    protected Animator anim; 
 
     private void Awake()
     {
         GameManager.OnBeforeStateChanged += OnStateChanged;
         SetInitReferences();
+        gm = FindObjectOfType<GameManager>();
+        if (gm.State == GameState.InGame) _canMove = true;
+        anim = GetComponent<Animator>();
+
     }
 
-    private void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
+    protected  void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
 
-    private void OnStateChanged(GameState newState)
+    protected virtual void OnStateChanged(GameState newState)
     {
         if (newState == GameState.InGame) _canMove = true;
         else _canMove = false;
@@ -21,5 +27,6 @@ public class MovementBase : MonoBehaviour
 
     protected virtual void SetInitReferences()
     {
+       
     }
 }

@@ -26,8 +26,7 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;
     bool damaged;
 
-    
-    
+
     private bool _canTakeDamage = false;
 
     private void Awake()
@@ -43,8 +42,7 @@ public class PlayerHealth : MonoBehaviour
         if (newState == GameState.InGame) _canTakeDamage = true;
         else _canTakeDamage = false;
     }
-    
-    
+
 
     void SetInitReferences()
     {
@@ -57,10 +55,12 @@ public class PlayerHealth : MonoBehaviour
         {
             damageImagePresent = true;
         }
+
         if (anim != null)
         {
             animPresent = true;
         }
+
         if (healthSlider != null)
         {
             healthSliderPresent = true;
@@ -76,8 +76,8 @@ public class PlayerHealth : MonoBehaviour
         FlashDamageImage();
         damaged = false;
     }
-    
-    
+
+
     void FlashDamageImage()
     {
         if (damaged)
@@ -97,7 +97,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (!_canTakeDamage) return;
-        
+
         damaged = true;
 
         currentHealth -= amount;
@@ -128,11 +128,9 @@ public class PlayerHealth : MonoBehaviour
 
         playerMovement.enabled = false;
         playerShooting.enabled = false;
-    }
 
 
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(0);
+        GameManager.Instance.ChangeState(GameState.GameOver);
     }
+
 }
