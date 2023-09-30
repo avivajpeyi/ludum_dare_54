@@ -15,10 +15,12 @@ public class EnemyAttack : AttackerBase
     EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
+    GameManager gameManager;
 
     private void Start()
     {
-        _canAttack = GameManager.Instance.State == GameState.InGame; 
+        gameManager = FindObjectOfType<GameManager>();
+        _canAttack = gameManager.State == GameState.InGame; 
     }
 
     public override void SetInitReferences()

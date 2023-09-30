@@ -13,22 +13,30 @@ public class EnemySpawner : Singleton<EnemySpawner>
     [SerializeField] private float spawnDelay = 3f;
 
 
-    [SerializeField] public  int maxEnemies = 10;
+    [SerializeField] public int maxEnemies = 10;
 
-    [SerializeField] public  int currentEnemyCount = 0;
+    [SerializeField] public int currentEnemyCount = 0;
 
-    
+
     // Make an event for EnemySpawned
-    
+
     public static event Action OnEnemySpawned;
-    
-    
+
+
     private bool _canSpawn = false;
 
 
-    private void Awake() => GameManager.OnBeforeStateChanged += OnStateChanged;
+    private void Awake()
+    {
+        GameManager.OnBeforeStateChanged += OnStateChanged;
+        EnemyHealth.OnEnemyDeath += DecreaseEnemyCount;
+    }
 
-    private void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
+    private void OnDestroy()
+    {
+        GameManager.OnBeforeStateChanged -= OnStateChanged;
+        EnemyHealth.OnEnemyDeath -= DecreaseEnemyCount;
+    }
 
     private void OnStateChanged(GameState newState)
     {
@@ -49,6 +57,8 @@ public class EnemySpawner : Singleton<EnemySpawner>
         Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex].position,
             Quaternion.identity);
         currentEnemyCount++;
+
+        OnEnemySpawned?.Invoke();
     }
 
     IEnumerator SpawnEnemyCoroutine()
@@ -65,6 +75,4 @@ public class EnemySpawner : Singleton<EnemySpawner>
     {
         currentEnemyCount--;
     }
-    
-    
 }

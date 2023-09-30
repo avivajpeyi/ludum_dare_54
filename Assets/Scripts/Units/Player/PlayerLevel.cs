@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerLevel : StaticInstance<PlayerLevel>
+public class PlayerLevel : Singleton<PlayerLevel>
 {
     public static int currentLevel = 1;
     public static int currentXP = 0;

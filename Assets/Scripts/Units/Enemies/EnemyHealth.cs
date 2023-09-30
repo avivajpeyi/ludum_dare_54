@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent (typeof (ParticleSystem))]
-[RequireComponent (typeof (AudioSource))]
+[RequireComponent(typeof(ParticleSystem))]
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyHealth : MonoBehaviour
@@ -17,12 +17,15 @@ public class EnemyHealth : MonoBehaviour
     Animator anim;
     AudioSource enemyAudio;
     ParticleSystem hitParticles;
-    
-    [SerializeField]
-    [Tooltip("The CAPSULE hitbox collider of the enemy")]
+    GameManager gameManager;
+
+    [SerializeField] [Tooltip("The CAPSULE hitbox collider of the enemy")]
     CapsuleCollider hitboxCollider; // CAPSULE COLLIDER ARE THE HITBOXES
-    
-    
+
+    // EnemyTakeDamage event
+    public static event Action OnEnemyDeath;
+
+
     private bool animPresent = false;
     bool isDead;
     bool isSinking;
@@ -45,7 +48,9 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
-        _canTakeDamage = GameManager.Instance.State == GameState.InGame; 
+        gameManager = FindObjectOfType<GameManager>();
+        
+        _canTakeDamage = gameManager.State == GameState.InGame;
     }
 
 
@@ -54,14 +59,13 @@ public class EnemyHealth : MonoBehaviour
         anim = GetComponent<Animator>();
         if (anim != null)
             animPresent = true;
-        
+
 
         enemyAudio = GetComponent<AudioSource>();
         hitParticles = GetComponentInChildren<ParticleSystem>();
         hitboxCollider = GetComponent<CapsuleCollider>();
 
-        
-        
+
         currentHealth = startingHealth;
     }
 
@@ -84,9 +88,10 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= amount;
 
-        
         hitParticles.transform.position = hitPoint;
         hitParticles.Play();
+
+        OnEnemyDeath?.Invoke();
 
         if (currentHealth <= 0)
         {
@@ -98,7 +103,6 @@ public class EnemyHealth : MonoBehaviour
     void Death()
     {
         isDead = true;
-        EnemySpawner.Instance.DecreaseEnemyCount();
         ScoreEvents.AddScore(scoreValue);
 
         hitboxCollider.isTrigger = true;
@@ -108,7 +112,7 @@ public class EnemyHealth : MonoBehaviour
 
         enemyAudio.clip = deathClip;
         enemyAudio.Play();
-        
+
         StartSinking();
     }
 

@@ -6,24 +6,33 @@ using UnityEngine;
 
 public class EnemyCountUI : MonoBehaviour
 {
-    public TMP_Text txt;
-    EnemySpawner enemySpawner;
+    private TMP_Text txt;
+    private EnemySpawner enemySpawner;
 
-    
-    
-    
-    
-    void Start()
+    private void Awake()
     {
-        txt = GetComponent<TMP_Text>();
-        enemySpawner = EnemySpawner.Instance;
+        EnemySpawner.OnEnemySpawned += UpdateTxt;
+        EnemyHealth.OnEnemyDeath += UpdateTxt;
     }
 
 
-    void Update()
+    private void OnDestroy()
     {
-        
-        // FIXME: on EnemyDeath and EnemySpawned events
+        EnemySpawner.OnEnemySpawned -= UpdateTxt;
+        EnemyHealth.OnEnemyDeath -= UpdateTxt;
+    }
+
+
+    void Start()
+    {
+        txt = GetComponent<TMP_Text>();
+        enemySpawner = FindObjectOfType<EnemySpawner>();
+        UpdateTxt();
+    }
+
+
+    void UpdateTxt()
+    {
         txt.text = String.Format(
             "Enemy: {0}/{1}",
             enemySpawner.currentEnemyCount,
