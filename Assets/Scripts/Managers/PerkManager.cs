@@ -24,13 +24,13 @@ public class PerkManager : MonoBehaviour
 
     private void Awake() {
         PlayerPerkEvents.eventLevelUp += ToggleUI;
-        ToggleUI();
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ToggleUI();
     }
 
     // Update is called once per frame
@@ -43,8 +43,13 @@ public class PerkManager : MonoBehaviour
         PlayerPerkEvents.eventLevelUp -= ToggleUI;
     }
     
+    
+    
+    
     public void ToggleUI()
     {
+        
+        
         gameObject.SetActive(!gameObject.activeSelf);
         if (gameObject.activeSelf)
         {
