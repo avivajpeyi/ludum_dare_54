@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    public static int score;
 
-
-    Text text;
+    [SerializeField] private TMP_Text _scoreText;
 
 
     void Awake ()
     {
-        text = GetComponent <Text> ();
-        score = 0;
+        ScoreEvents.SetScore(0f);
     }
-
 
     void Update ()
     {
-        text.text = "Score: " + score;
+        _scoreText.text = "Score: " + ScoreEvents.GetScore();
+    }
+
+    void OnDestroy() {
     }
 }
