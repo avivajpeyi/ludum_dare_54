@@ -30,10 +30,10 @@ public class PlayerPerkEvents : ScriptableObject
     public static event LevelUpDelegate eventLevelUp;
     public static void LevelUp()
     {
+        // THIS SHOULD BE HANDLED BY THE PLAYER LEVEL UP SCRIPT
         if (eventLevelUp != null)
         {
             eventLevelUp();
-            GameManager.Instance.ChangeState(GameState.InUpgrades);
         }
     }
 }

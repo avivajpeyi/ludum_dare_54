@@ -8,10 +8,30 @@ public class PlayerLevelUI : MonoBehaviour
 {
     TMP_Text txt;
 
+
+    private void Awake()
+    {
+        GameManager.OnAfterStateChanged += OnStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnAfterStateChanged -= OnStateChanged;
+    }
+
+
+    private void OnStateChanged(GameState newState)
+    {
+        if (newState == GameState.InGame) SetTxt();
+        else txt.text = "";
+    }
+
+
     private void Start()
     {
         txt = GetComponent<TMP_Text>();
     }
+
 
     void SetTxt()
     {
@@ -21,11 +41,5 @@ public class PlayerLevelUI : MonoBehaviour
             PlayerLevel.currentXP,
             PlayerLevel.XPneeded
         );
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetTxt();
     }
 }

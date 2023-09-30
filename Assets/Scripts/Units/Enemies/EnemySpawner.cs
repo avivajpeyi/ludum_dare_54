@@ -6,23 +6,16 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : Singleton<EnemySpawner>
 {
+    // Editor fields
     [SerializeField] private Transform[] spawnPoints;
-
     [SerializeField] private GameObject[] enemyPrefabs;
-
     [SerializeField] private float spawnDelay = 3f;
-
-
     [SerializeField] public int maxEnemies = 10;
 
-    [SerializeField] public int currentEnemyCount = 0;
-
-
-    // Make an event for EnemySpawned
+    // Make getter for currentEnemyCount public, setter private
+    public int currentEnemyCount { get; private set; } = 0;
 
     public static event Action OnEnemySpawned;
-
-
     private bool _canSpawn = false;
 
 
