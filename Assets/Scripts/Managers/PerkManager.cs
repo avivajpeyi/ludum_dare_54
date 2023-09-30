@@ -24,7 +24,7 @@ public class PerkManager : MonoBehaviour
     [SerializeField] private GameObject activePerkUI;
     [SerializeField] private GameObject selectPerkUI;
 
-    List<ActivePerk> currentPerks;
+    List<ActivePerk> currentPerks = new List<ActivePerk>();
 
     int numberOfPerksToPick = 2;
     
@@ -128,12 +128,13 @@ public class PerkManager : MonoBehaviour
         perkTile.SetSecondaryText(secondaryText);
         Button perkButton = perkTile.GetComponent<Button>();
         perkButton.onClick.AddListener(DisablePerksUi);
-        perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
+        // perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
         switch (perkType)
         {
             case PerkType.DamageBuff:
                 DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
                 perkButton.onClick.AddListener(damageBuff.OnClick);
+                perkButton.onClick.AddListener(AddBuffPerk);
                 
                 break;
 
@@ -141,12 +142,14 @@ public class PerkManager : MonoBehaviour
                 DamageBuff damageBuffBuff = perkTileObject.AddComponent<DamageBuff>();
                 damageBuffBuff.SetDamageToBuff(2f);
                 perkButton.onClick.AddListener(damageBuffBuff.OnClick);
+                perkButton.onClick.AddListener(AddBuffBuffPerk);
                 
                 break;
 
             case PerkType.IncreaseView:
                 IncreaseView increaseView = perkTileObject.AddComponent<IncreaseView>();
                 perkButton.onClick.AddListener(increaseView.OnClick);
+                perkButton.onClick.AddListener(AddIncreaseViewPerk);
                 
                 break;
             
@@ -155,6 +158,21 @@ public class PerkManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    void AddBuffPerk()
+    {
+        AddSelectedPerkToActivePerksList(PerkType.DamageBuff);
+    }
+
+    void AddBuffBuffPerk()
+    {
+        AddSelectedPerkToActivePerksList(PerkType.DamageBuffBuff);
+    }
+
+    void AddIncreaseViewPerk()
+    {
+        AddSelectedPerkToActivePerksList(PerkType.IncreaseView);
     }
 
     void AddSelectedPerkToActivePerksList(PerkType perkType)
@@ -166,11 +184,12 @@ public class PerkManager : MonoBehaviour
         if (perk != null)
         {
             perk.multiplyer++;
-            var perkTiles = activePerkUI.GetComponents<PerkTile>();
+            var perkTiles = activePerkUI.GetComponentsInChildren<PerkTile>();
             foreach (var perkTile in perkTiles)
             {
                 if (perkType == PerkType.DamageBuff)
                 {
+                    Debug.Log("increment dmg+");
                     if (perkTile.GetPrimaryText() == "DMG+")
                     {
                         perkTile.SetSecondaryText("(" + perk.multiplyer + ")");
@@ -203,6 +222,7 @@ public class PerkManager : MonoBehaviour
             currentPerks.Add(newPerk);
             GameObject perkTileObject = Instantiate(perkTilePrefab, activePerkUI.transform);
             PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
+            perkTile.SetTextSmall();
             switch (perkType)
             {
                 case PerkType.DamageBuff:
@@ -225,7 +245,5 @@ public class PerkManager : MonoBehaviour
                     break;
             }
         }
-
-        // if list containts perk, update it's secondary text
     }
 }

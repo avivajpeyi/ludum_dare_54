@@ -8,7 +8,7 @@ public class PlayerLevel : Singleton<PlayerLevel>
 {
     public static int currentLevel = 1;
     public static int currentXP = 0;
-    public static int XPneeded => Mathf.Max(100,currentLevel * 10);
+    public static int XPneeded => Mathf.Max(10,currentLevel * 10);
 
     
     // Make level up event

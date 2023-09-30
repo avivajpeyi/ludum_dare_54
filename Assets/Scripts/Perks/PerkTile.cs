@@ -34,4 +34,10 @@ public class PerkTile : MonoBehaviour
     {
         return primaryText.text;
     }
+
+    public void SetTextSmall()
+    {
+        primaryText.fontSize = 24;
+        secondaryText.fontSize = 20;
+    }
 }
