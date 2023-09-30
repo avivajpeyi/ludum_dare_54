@@ -21,6 +21,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     private void Awake()
     {
+        base.Awake();
         GameManager.OnBeforeStateChanged += OnStateChanged;
         EnemyHealth.OnEnemyDeath += DecreaseEnemyCount;
     }

@@ -11,10 +11,9 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
-    [SerializeField]
-    bool  DebugMode = false;
-    
-    
+    [SerializeField] bool DebugMode = false;
+
+
     [Tooltip("Time when the game is over")]
     private float timeWhenGameOver = -1;
 
@@ -23,12 +22,16 @@ public class GameManager : Singleton<GameManager>
 
 
     // Kick the game off with the first state
-    void Awake() => ChangeState(GameState.Initalisation);
+    void Awake()
+    {
+        base.Awake();
+        ChangeState(GameState.Initalisation);
+    }
 
     public void ChangeState(GameState newState)
     {
+        Debug.Log($"<color=green>STATE:{State}-->{newState}</color>");
         OnBeforeStateChanged?.Invoke(newState);
-
         State = newState;
         switch (newState)
         {
@@ -79,7 +82,7 @@ public class GameManager : Singleton<GameManager>
     {
         PauseManager.gameIsPaused = true;
     }
-    
+
     private void HandleInUpgrades()
     {
         PauseManager.gameIsPaused = true;
@@ -96,7 +99,7 @@ public class GameManager : Singleton<GameManager>
         // PauseManager.gameIsPaused = true;
         timeWhenGameOver = Time.time;
     }
-    
+
 
     private void Update()
     {

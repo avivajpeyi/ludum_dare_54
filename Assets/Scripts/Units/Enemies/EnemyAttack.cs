@@ -19,7 +19,7 @@ public class EnemyAttack : AttackerBase
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameManager.Instance;
         _canAttack = gameManager.State == GameState.InGame; 
     }
 

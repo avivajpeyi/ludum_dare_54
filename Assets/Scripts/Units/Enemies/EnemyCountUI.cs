@@ -26,7 +26,7 @@ public class EnemyCountUI : MonoBehaviour
     void Start()
     {
         txt = GetComponent<TMP_Text>();
-        enemySpawner = FindObjectOfType<EnemySpawner>();
+        enemySpawner = EnemySpawner.Instance;
         UpdateTxt();
     }
 

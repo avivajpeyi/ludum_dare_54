@@ -21,7 +21,7 @@ public class EnemyMovement : MovementBase
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = GameManager.Instance;
         _canMove = gameManager.State == GameState.InGame;
     }
 
