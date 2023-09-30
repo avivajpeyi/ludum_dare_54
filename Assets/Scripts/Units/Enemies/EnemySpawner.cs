@@ -18,6 +18,10 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
 
     void SpawnEnemy()
     {
+        if (currentEnemyCount >= maxEnemies)
+        {
+            return;
+        }
         int randomIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
         Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex].position,
