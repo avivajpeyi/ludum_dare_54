@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : StaticInstance<PlayerStats>
 {
     [SerializeField] private float baseSpeed = 1f;
     [SerializeField] private float baseDamage = 2f;
 
     float currentSpeed = 0;
-    float currentDamage = 0;
+    static float currentDamage = 0;
 
     private void Awake() {
         currentSpeed = baseSpeed;
@@ -16,17 +16,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPerkEvents.eventBuffDamage += BuffDamage;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnDestroy() {
         PlayerPerkEvents.eventBuffDamage -= BuffDamage;
@@ -42,7 +32,7 @@ public class PlayerStats : MonoBehaviour
         return currentSpeed;
     }
 
-    public float GetCurrentDamage()
+    public static float GetCurrentDamage()
     {
         return currentDamage;
     }

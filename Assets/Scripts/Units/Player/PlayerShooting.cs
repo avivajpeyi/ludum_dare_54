@@ -6,7 +6,7 @@
 [RequireComponent (typeof (Light))]
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
+    private PlayerStats playerStats;
     public float damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
@@ -26,12 +26,13 @@ public class PlayerShooting : MonoBehaviour
     void Awake ()
     {
         shootableMask = LayerMask.GetMask ("Shootable");
+        
         gunParticles = GetComponent<ParticleSystem> ();
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
         gunLight = GetComponent<Light> ();
     }
-
+    
 
     void Update ()
     {
@@ -78,7 +79,7 @@ public class PlayerShooting : MonoBehaviour
             EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
             if(enemyHealth != null)
             {
-                enemyHealth.TakeDamage ((damagePerShot + playerStats.GetCurrentDamage()), shootHit.point);
+                enemyHealth.TakeDamage ((damagePerShot + PlayerStats.GetCurrentDamage()), shootHit.point);
             }
             gunLine.SetPosition (1, shootHit.point);
         }
