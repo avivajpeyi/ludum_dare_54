@@ -15,6 +15,7 @@ public class PlayerLevel : StaticInstance<PlayerLevel>
     {
         currentLevel++;
         currentXP = 0;
+        PlayerPerkEvents.LevelUp();
     }
 
 

@@ -8,6 +8,7 @@ public class IncreaseView : PerkBase
 
     public override void OnClick()
     {
+        Debug.Log("click");
         PlayerPerkEvents.IncreaseView(viewIncreaseIncrement);
     }
 }

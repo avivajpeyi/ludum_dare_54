@@ -36,4 +36,14 @@ public class PlayerStats : MonoBehaviour
     {
         currentDamage += damageToBuff;
     }
+
+    public float GetCurrentSpeed()
+    {
+        return currentSpeed;
+    }
+
+    public float GetCurrentDamage()
+    {
+        return currentDamage;
+    }
 }

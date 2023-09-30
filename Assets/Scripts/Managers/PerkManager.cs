@@ -22,6 +22,10 @@ public class PerkManager : MonoBehaviour
 
     int numberOfPerksToPick = 2;
 
+    private void Awake() {
+        PlayerPerkEvents.eventLevelUp += ToggleUI;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,10 @@ public class PerkManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnDestroy() {
+        PlayerPerkEvents.eventLevelUp -= ToggleUI;
     }
     
     public void ToggleUI()

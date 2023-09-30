@@ -25,4 +25,14 @@ public class PlayerPerkEvents : ScriptableObject
             eventIncreaseView(IncreaseViewAmount);
         }
     }
+
+    public delegate void LevelUpDelegate();
+    public static event LevelUpDelegate eventLevelUp;
+    public static void LevelUp()
+    {
+        if (eventLevelUp != null)
+        {
+            eventLevelUp();
+        }
+    }
 }
