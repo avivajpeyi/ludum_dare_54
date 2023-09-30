@@ -91,8 +91,6 @@ public class EnemyHealth : MonoBehaviour
         hitParticles.transform.position = hitPoint;
         hitParticles.Play();
 
-        OnEnemyDeath?.Invoke();
-
         if (currentHealth <= 0)
         {
             Death();
@@ -106,6 +104,8 @@ public class EnemyHealth : MonoBehaviour
         ScoreEvents.AddScore(scoreValue);
 
         hitboxCollider.isTrigger = true;
+
+        OnEnemyDeath?.Invoke();
 
         if (animPresent)
             anim.SetTrigger("Dead");
