@@ -9,6 +9,8 @@ public class PerkManager : MonoBehaviour
     [SerializeField] private GameObject activePerkUI;
     [SerializeField] private GameObject selectPerkUI;
 
+    int numberOfPerksToPick = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +26,9 @@ public class PerkManager : MonoBehaviour
     public void ToggleUI()
     {
         gameObject.SetActive(!gameObject.activeSelf);
+    }
+
+    public void PopulateSelectPerkList(){
+        
     }
 }
