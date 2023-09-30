@@ -6,6 +6,9 @@ public class PlayerDropable : MonoBehaviour
 {
     [SerializeField] GameObject dropableObject;
 
+    float timer;
+    float timeBetweenDrops = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,10 +18,19 @@ public class PlayerDropable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Drop"))
+        timer += Time.deltaTime;
+
+        if (Input.GetButton("Drop") && timer >= timeBetweenDrops && Time.timeScale != 0)
         {
-            
+            DropObject();
         }
         
+    }
+
+    void DropObject()
+    {
+        timer = 0f;
+        // gameObject.transform.GetLocalPositionAndRotation(out var location, out var rotation);
+        Instantiate(dropableObject, gameObject.transform.localPosition, gameObject.transform.localRotation);
     }
 }
