@@ -39,5 +39,6 @@ public class PerkTile : MonoBehaviour
     {
         primaryText.fontSize = 24;
         secondaryText.fontSize = 20;
+        secondaryText.transform.position = new Vector2(secondaryText.transform.position.x, secondaryText.transform.position.y + 30);
     }
 }
