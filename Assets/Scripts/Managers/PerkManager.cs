@@ -12,13 +12,19 @@ public enum PerkType
     IncreaseView
 }
 
+class ActivePerk
+{
+    public PerkType perkType;
+    public int multiplyer = 1;
+}
+
 public class PerkManager : MonoBehaviour
 {
     [SerializeField] private GameObject perkTilePrefab;
     [SerializeField] private GameObject activePerkUI;
     [SerializeField] private GameObject selectPerkUI;
 
-    List<PerkBase> currentPerks;
+    List<ActivePerk> currentPerks;
 
     int numberOfPerksToPick = 2;
     
@@ -148,5 +154,78 @@ public class PerkManager : MonoBehaviour
                 Debug.Log("InstantiatePerkTile switch fell through...");
                 break;
         }
+
+    }
+
+    void AddSelectedPerkToActivePerksList(PerkType perkType)
+    {
+        // if list does not contain perk, add it
+        // ActivePerk activePerk = new ActivePerk();
+        // activePerk.perkType = perkType;
+        var perk = currentPerks.Find(perk => perk.perkType == perkType);
+        if (perk != null)
+        {
+            perk.multiplyer++;
+            var perkTiles = activePerkUI.GetComponents<PerkTile>();
+            foreach (var perkTile in perkTiles)
+            {
+                if (perkType == PerkType.DamageBuff)
+                {
+                    if (perkTile.GetPrimaryText() == "DMG+")
+                    {
+                        perkTile.SetSecondaryText("(" + perk.multiplyer + ")");
+                    }
+                }
+
+                if (perkType == PerkType.DamageBuffBuff)
+                {
+                    if (perkTile.GetPrimaryText() == "DMG++")
+                    {
+                        perkTile.SetSecondaryText("(" + perk.multiplyer + ")");
+                    }
+                }
+
+                if (perkType == PerkType.IncreaseView)
+                {
+                    if (perkTile.GetPrimaryText() == "View+")
+                    {
+                        perkTile.SetSecondaryText("(" + perk.multiplyer + ")");
+                    }
+                }
+            }
+        }
+        else
+        {
+            var newPerk = new ActivePerk
+            {
+                perkType = perkType
+            };
+            currentPerks.Add(newPerk);
+            GameObject perkTileObject = Instantiate(perkTilePrefab, activePerkUI.transform);
+            PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
+            switch (perkType)
+            {
+                case PerkType.DamageBuff:
+                    perkTile.SetPrimaryText("DMG+");
+                    perkTile.SetSecondaryText("(" + newPerk.multiplyer + ")");
+                    break;
+                
+                case PerkType.DamageBuffBuff:
+                    perkTile.SetPrimaryText("DMG++");
+                    perkTile.SetSecondaryText("(" + newPerk.multiplyer + ")");
+                    break;
+                
+                case PerkType.IncreaseView:
+                    perkTile.SetPrimaryText("View+");
+                    perkTile.SetSecondaryText("(" + newPerk.multiplyer + ")");
+                    break;
+                
+                default:
+                    Debug.Log("AddSelectedPerkToActivePerkList switch fell through...");
+                    break;
+            }
+        }
+
+        // if list containts perk, update it's secondary text
     }
 }

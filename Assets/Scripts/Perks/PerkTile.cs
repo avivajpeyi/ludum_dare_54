@@ -29,4 +29,9 @@ public class PerkTile : MonoBehaviour
     {
         secondaryText.text = text;
     }
+
+    public string GetPrimaryText()
+    {
+        return primaryText.text;
+    }
 }
