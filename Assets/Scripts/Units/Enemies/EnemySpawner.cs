@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : StaticInstance<EnemySpawner>
+public class EnemySpawner : Singleton<EnemySpawner>
 {
     [SerializeField] private Transform[] spawnPoints;
 
@@ -13,10 +13,16 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
     [SerializeField] private float spawnDelay = 3f;
 
 
-    [SerializeField] public static int maxEnemies = 10;
+    [SerializeField] public  int maxEnemies = 10;
 
-    [SerializeField] public static int currentEnemyCount = 0;
+    [SerializeField] public  int currentEnemyCount = 0;
 
+    
+    // Make an event for EnemySpawned
+    
+    public static event Action OnEnemySpawned;
+    
+    
     private bool _canSpawn = false;
 
 
@@ -55,8 +61,10 @@ public class EnemySpawner : StaticInstance<EnemySpawner>
     }
 
 
-    static public void DecreaseEnemyCount()
+    public void DecreaseEnemyCount()
     {
         currentEnemyCount--;
     }
+    
+    
 }

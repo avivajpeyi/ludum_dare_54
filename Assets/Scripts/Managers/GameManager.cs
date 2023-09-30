@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
 
 
     // Kick the game off with the first state
-    void Start() => ChangeState(GameState.Initalisation);
+    void Awake() => ChangeState(GameState.Initalisation);
 
     public void ChangeState(GameState newState)
     {

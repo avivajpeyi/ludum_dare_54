@@ -84,6 +84,7 @@ public class EnemyHealth : MonoBehaviour
 
         currentHealth -= amount;
 
+        
         hitParticles.transform.position = hitPoint;
         hitParticles.Play();
 
@@ -97,7 +98,7 @@ public class EnemyHealth : MonoBehaviour
     void Death()
     {
         isDead = true;
-        EnemySpawner.DecreaseEnemyCount();
+        EnemySpawner.Instance.DecreaseEnemyCount();
         ScoreEvents.AddScore(scoreValue);
 
         hitboxCollider.isTrigger = true;
