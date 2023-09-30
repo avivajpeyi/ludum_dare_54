@@ -128,7 +128,7 @@ public class PerkManager : MonoBehaviour
         perkTile.SetSecondaryText(secondaryText);
         Button perkButton = perkTile.GetComponent<Button>();
         perkButton.onClick.AddListener(DisablePerksUi);
-        // perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
+        perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
         switch (perkType)
         {
             case PerkType.DamageBuff:
