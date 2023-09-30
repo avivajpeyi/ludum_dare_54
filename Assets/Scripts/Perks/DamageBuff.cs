@@ -2,24 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageBuff : MonoBehaviour
+public class DamageBuff : PerkBase
 {
-    [SerializeField] private float damageToBuff = 2f;
+    [SerializeField] private int damageToBuff = 1;
 
-    // Start is called before the first frame update
-    void Start()
+    public override void OnClick()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void BuffDamage()
-    {
-        
+        PlayerPerkEvents.BuffDamage(damageToBuff);
     }
 }

@@ -20,12 +20,12 @@ public class PerkTile : MonoBehaviour
         
     }
 
-    void SetPrimaryText(string text)
+    public void SetPrimaryText(string text)
     {
         primaryText.text = text;
     }
 
-    void SetSecondaryText(string text)
+    public void SetSecondaryText(string text)
     {
         secondaryText.text = text;
     }

@@ -128,6 +128,65 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1996340181579593765, guid: a28c9af792339db43ad992666257e5e8, type: 3}
   m_PrefabInstance: {fileID: 1996340181361300849}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &297716731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 297716734}
+  - component: {fileID: 297716733}
+  - component: {fileID: 297716732}
+  m_Layer: 0
+  m_Name: Perks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &297716732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297716731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8756149b697f9e49aa4985cde623d03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewIncreaseIncrement: 0.2
+--- !u!114 &297716733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297716731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bf99e1f5e59e545a7115ce2fc67675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageToBuff: 1
+--- !u!4 &297716734
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297716731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 431.3333, y: 237, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &326403961 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7292462547698563551, guid: e5c447192144ebd4a9c6efffc747c315, type: 3}
@@ -819,6 +878,18 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 240.8
       objectReference: {fileID: 0}
+    - target: {fileID: 6336351320021949229, guid: e49c5e74f75763844a8f1e5b85b429ba, type: 3}
+      propertyPath: perks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6336351320021949229, guid: e49c5e74f75763844a8f1e5b85b429ba, type: 3}
+      propertyPath: perks.Array.data[0]
+      value: 
+      objectReference: {fileID: 297716733}
+    - target: {fileID: 6336351320021949229, guid: e49c5e74f75763844a8f1e5b85b429ba, type: 3}
+      propertyPath: perks.Array.data[1]
+      value: 
+      objectReference: {fileID: 297716733}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e49c5e74f75763844a8f1e5b85b429ba, type: 3}
 --- !u!114 &3315918554642604394 stripped
