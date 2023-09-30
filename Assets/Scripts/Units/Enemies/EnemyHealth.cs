@@ -6,8 +6,8 @@
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyHealth : MonoBehaviour
 {
-    public int startingHealth = 100;
-    public int currentHealth;
+    public float startingHealth = 100f;
+    public float currentHealth;
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
@@ -53,7 +53,7 @@ public class EnemyHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage(int amount, Vector3 hitPoint)
+    public void TakeDamage(float amount, Vector3 hitPoint)
     {
         if (isDead)
             return;

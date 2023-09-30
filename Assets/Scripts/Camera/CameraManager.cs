@@ -13,6 +13,10 @@ public class CameraManager : MonoBehaviour
     // current cam idx
     private int camIdx = 0;
 
+    private void Awake() {
+        PlayerPerkEvents.eventIncreaseView += IncreaseCamera;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +44,13 @@ public class CameraManager : MonoBehaviour
             IncreaseCamera();
     }
 
-    public void IncreaseCamera()
+    private void OnDestroy() {
+        PlayerPerkEvents.eventIncreaseView -= IncreaseCamera;
+    }
+
+    public void IncreaseCamera(float increment = 1f)
     {
+        Debug.Log("IncreaseCamera()");
         if (camIdx < vcams.Length - 1)
             camIdx++;
         else

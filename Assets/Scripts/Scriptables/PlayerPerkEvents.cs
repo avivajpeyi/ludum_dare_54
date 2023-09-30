@@ -6,9 +6,9 @@ using UnityEngine;
 public class PlayerPerkEvents : ScriptableObject
 {
 
-    public delegate void BuffDamageDelegate(int buffAmount);
+    public delegate void BuffDamageDelegate(float buffAmount);
     public static event BuffDamageDelegate eventBuffDamage;
-    public static void BuffDamage(int buffAmount)
+    public static void BuffDamage(float buffAmount)
     {
         if (eventBuffDamage != null)
         {
@@ -23,6 +23,16 @@ public class PlayerPerkEvents : ScriptableObject
         if (eventIncreaseView != null)
         {
             eventIncreaseView(IncreaseViewAmount);
+        }
+    }
+
+    public delegate void LevelUpDelegate();
+    public static event LevelUpDelegate eventLevelUp;
+    public static void LevelUp()
+    {
+        if (eventLevelUp != null)
+        {
+            eventLevelUp();
         }
     }
 }

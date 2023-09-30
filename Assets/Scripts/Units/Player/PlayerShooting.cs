@@ -6,7 +6,8 @@
 [RequireComponent (typeof (Light))]
 public class PlayerShooting : MonoBehaviour
 {
-    public int damagePerShot = 20;
+    [SerializeField] private PlayerStats playerStats;
+    public float damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;
     public float range = 100f;
 
@@ -77,7 +78,7 @@ public class PlayerShooting : MonoBehaviour
             EnemyHealth enemyHealth = shootHit.collider.GetComponent <EnemyHealth> ();
             if(enemyHealth != null)
             {
-                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                enemyHealth.TakeDamage ((damagePerShot + playerStats.GetCurrentDamage()), shootHit.point);
             }
             gunLine.SetPosition (1, shootHit.point);
         }
