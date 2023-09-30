@@ -5,12 +5,14 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField] private float baseSpeed = 1f;
-    [SerializeField] private int baseDamage = 2;
+    [SerializeField] private float baseDamage = 2f;
 
-    float currentSpeed = 1f;
-    int currentDamage = 2;
+    float currentSpeed = 0;
+    float currentDamage = 0;
 
     private void Awake() {
+        currentSpeed = baseSpeed;
+        currentDamage = baseDamage;
         PlayerPerkEvents.eventBuffDamage += BuffDamage;
     }
 
@@ -30,7 +32,7 @@ public class PlayerStats : MonoBehaviour
         PlayerPerkEvents.eventBuffDamage -= BuffDamage;
     }
 
-    void BuffDamage(int damageToBuff)
+    void BuffDamage(float damageToBuff)
     {
         currentDamage += damageToBuff;
     }

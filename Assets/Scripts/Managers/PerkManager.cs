@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public enum PerkType
 {
     DamageBuff,
+    DamageBuffBuff,
     IncreaseView
 }
 
@@ -52,7 +53,7 @@ public class PerkManager : MonoBehaviour
     public void PopulateSelectPerkList(){
         for (int i = 0; i < numberOfPerksToPick; i++)
         {
-            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 2f));
+            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 3f));
             switch (randomNumber)
             {
                 // case number ranges should be based on number of perks and their rarity
@@ -64,6 +65,11 @@ public class PerkManager : MonoBehaviour
                 case 2:
                     // Increase view perk
                     InstantiatePerkTile("View+", "", selectPerkUI.transform, PerkType.IncreaseView);
+                    break;
+
+                case 3:
+                    // Increase view perk
+                    InstantiatePerkTile("DMG++", "", selectPerkUI.transform, PerkType.DamageBuffBuff);
                     break;
                 
                 default:
@@ -84,6 +90,13 @@ public class PerkManager : MonoBehaviour
             case PerkType.DamageBuff:
                 DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
                 perkTile.GetComponent<Button>().onClick.AddListener(damageBuff.OnClick);
+                perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
+                break;
+
+            case PerkType.DamageBuffBuff:
+                DamageBuff damageBuffBuff = perkTileObject.AddComponent<DamageBuff>();
+                damageBuffBuff.SetDamageToBuff(2f);
+                perkTile.GetComponent<Button>().onClick.AddListener(damageBuffBuff.OnClick);
                 perkTile.GetComponent<Button>().onClick.AddListener(ToggleUI);
                 break;
 
