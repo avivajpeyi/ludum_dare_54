@@ -76,7 +76,7 @@ public class PerkManager : MonoBehaviour
         {
             PopulateSelectPerkList();
         }
-        if (active)
+        if (!active)
         {
             foreach (Transform child in selectPerkUI.transform)
             {
