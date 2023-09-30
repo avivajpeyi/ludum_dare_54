@@ -75,6 +75,8 @@ public class EnemyHealth : MonoBehaviour
     void Death()
     {
         isDead = true;
+        EnemySpawner.DecreaseEnemyCount();
+        ScoreEvents.AddScore(scoreValue);
 
         hitboxCollider.isTrigger = true;
 
@@ -93,7 +95,6 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
-        ScoreEvents.AddScore(scoreValue);
         Destroy(gameObject, 2f);
     }
 }
