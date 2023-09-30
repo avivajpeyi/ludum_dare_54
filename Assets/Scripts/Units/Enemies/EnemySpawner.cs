@@ -15,27 +15,41 @@ public class EnemySpawner : Singleton<EnemySpawner>
     // Make getter for currentEnemyCount public, setter private
     public int currentEnemyCount { get; private set; } = 0;
 
+    float _lastSpawnTime = 0f;
+
     public static event Action OnEnemySpawned;
-    private bool _canSpawn = false;
+
+
+    private bool _canSpawn
+    {
+        get
+        {
+            return (
+                GameManager.Instance.State == GameState.InGame &&
+                currentEnemyCount < maxEnemies &&
+                Time.time - _lastSpawnTime > spawnDelay
+            );
+        }
+    }
 
 
     private void Awake()
     {
         base.Awake();
-        GameManager.OnBeforeStateChanged += OnStateChanged;
         EnemyHealth.OnEnemyDeath += DecreaseEnemyCount;
     }
 
     private void OnDestroy()
     {
-        GameManager.OnBeforeStateChanged -= OnStateChanged;
         EnemyHealth.OnEnemyDeath -= DecreaseEnemyCount;
     }
 
-    private void OnStateChanged(GameState newState)
+    public void Update()
     {
-        if (newState == GameState.InGame) StartCoroutine("SpawnEnemyCoroutine");
-        else StopCoroutine("SpawnEnemyCoroutine");
+        if (_canSpawn)
+        {
+            SpawnEnemy();
+        }
     }
 
 
@@ -51,17 +65,8 @@ public class EnemySpawner : Singleton<EnemySpawner>
         Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex].position,
             Quaternion.identity);
         currentEnemyCount++;
-
+        _lastSpawnTime = Time.time;
         OnEnemySpawned?.Invoke();
-    }
-
-    IEnumerator SpawnEnemyCoroutine()
-    {
-        while (true)
-        {
-            SpawnEnemy();
-            yield return new WaitForSeconds(spawnDelay);
-        }
     }
 
 
