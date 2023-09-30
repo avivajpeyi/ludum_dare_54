@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour
 
 
     Animator anim;
+    bool animPresent = false;
     GameObject player;
     PlayerHealth playerHealth;
     EnemyHealth enemyHealth;
@@ -21,6 +22,8 @@ public class EnemyAttack : MonoBehaviour
         playerHealth = player.GetComponent <PlayerHealth> ();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent <Animator> ();
+        if (anim != null)
+            animPresent = true;
     }
 
 
@@ -53,7 +56,8 @@ public class EnemyAttack : MonoBehaviour
 
         if(playerHealth.currentHealth <= 0)
         {
-            anim.SetTrigger ("PlayerDead");
+            if (animPresent)
+                anim.SetTrigger ("PlayerDead");
         }
     }
 
