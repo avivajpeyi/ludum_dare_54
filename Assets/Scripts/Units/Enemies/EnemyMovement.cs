@@ -16,8 +16,7 @@ public class EnemyMovement : MonoBehaviour
         enemyHealth = GetComponent <EnemyHealth> ();
         nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
     }
-
-
+    
     void Update ()
     {
         if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
