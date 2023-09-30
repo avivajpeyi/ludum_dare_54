@@ -51,11 +51,7 @@ public class CameraManager : MonoBehaviour
     public void IncreaseCamera(float increment = 1f)
     {
         Debug.Log("IncreaseCamera()");
-        if (camIdx < vcams.Length - 1)
-            camIdx++;
-        else
-            camIdx = 0;
-
+        camIdx = Mathf.Clamp(camIdx + 1, 0, vcams.Length - 1);
         SetActiveCamera();
     }
 
