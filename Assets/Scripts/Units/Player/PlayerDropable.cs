@@ -31,6 +31,6 @@ public class PlayerDropable : MonoBehaviour
     {
         timer = 0f;
         // gameObject.transform.GetLocalPositionAndRotation(out var location, out var rotation);
-        Instantiate(dropableObject, gameObject.transform.localPosition, gameObject.transform.localRotation);
+        Instantiate(dropableObject, gameObject.transform.position, gameObject.transform.rotation);
     }
 }
