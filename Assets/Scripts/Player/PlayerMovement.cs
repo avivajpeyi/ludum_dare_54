@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 
 	Vector3 movement;
 	Animator anim;
+	bool animPresent = false;
 	Rigidbody playerRigidbody;
 	int floorMask;
 	float camRayLength = 100f;
@@ -14,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
 	{
 		floorMask = LayerMask.GetMask ("Floor");
 		anim = GetComponent <Animator> ();
+		if (anim != null) {
+			animPresent = true;
+		}
 		playerRigidbody = GetComponent <Rigidbody> (); 
 	}
 
@@ -24,7 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
 		Move (h, v);
 		Turning ();
-		Animating (h, v);
+		if (animPresent)
+			Animating (h, v);
 	}
 
 	void Move (float h, float v)
