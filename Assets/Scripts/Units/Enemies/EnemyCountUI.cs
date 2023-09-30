@@ -10,7 +10,6 @@ public class EnemyCountUI : MonoBehaviour
 
     void Update()
     {
-        // Enemy = print(current/total)
         txt.text = String.Format(
             "Enemy: {0}/{1}",
             EnemySpawner.currentEnemyCount,
