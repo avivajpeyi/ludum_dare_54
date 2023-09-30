@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+[RequireComponent (typeof (ParticleSystem))]
+[RequireComponent (typeof (LineRenderer))]
+[RequireComponent (typeof (AudioSource))]
+[RequireComponent (typeof (Light))]
 public class PlayerShooting : MonoBehaviour
 {
     public int damagePerShot = 20;
