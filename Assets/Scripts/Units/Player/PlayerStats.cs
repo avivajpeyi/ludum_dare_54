@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : StaticInstance<PlayerStats>
+public class PlayerStats : Singleton<PlayerStats>
 {
     [SerializeField] private float baseSpeed = 1f;
     [SerializeField] private float baseDamage = 2f;
@@ -10,15 +10,16 @@ public class PlayerStats : StaticInstance<PlayerStats>
     float currentSpeed = 0;
     static float currentDamage = 0;
 
-    private void Awake() {
+    private void Awake()
+    {
         currentSpeed = baseSpeed;
         currentDamage = baseDamage;
         PlayerPerkEvents.eventBuffDamage += BuffDamage;
     }
 
 
-
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         PlayerPerkEvents.eventBuffDamage -= BuffDamage;
     }
 
@@ -32,7 +33,7 @@ public class PlayerStats : StaticInstance<PlayerStats>
         return currentSpeed;
     }
 
-    public static float GetCurrentDamage()
+    public float GetCurrentDamage()
     {
         return currentDamage;
     }

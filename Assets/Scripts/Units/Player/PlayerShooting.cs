@@ -34,6 +34,7 @@ public class PlayerShooting : AttackerBase
         gunLine = GetComponent<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
+        playerStats = GetComponentInParent<PlayerStats>();
     }
 
 
@@ -86,7 +87,7 @@ public class PlayerShooting : AttackerBase
             EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage((damagePerShot + PlayerStats.GetCurrentDamage()),
+                enemyHealth.TakeDamage((damagePerShot + playerStats.GetCurrentDamage()),
                     shootHit.point);
             }
 

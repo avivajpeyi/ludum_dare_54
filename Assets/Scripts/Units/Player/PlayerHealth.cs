@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(AudioSource))]
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Singleton<PlayerHealth>
 {
     public int startingHealth = 100;
     public int currentHealth;

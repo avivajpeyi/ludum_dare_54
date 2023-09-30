@@ -8,32 +8,28 @@ public class EnemyMovement : MovementBase
     PlayerHealth playerHealth;
     EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
+    GameManager gameManager;
 
 
     protected override void SetInitReferences()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerHealth = player.GetComponent<PlayerHealth>();
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = playerHealth.transform;
         enemyHealth = GetComponent<EnemyHealth>();
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
     private void Start()
     {
-        _canMove = GameManager.Instance.State == GameState.InGame;
+        gameManager = FindObjectOfType<GameManager>();
+        _canMove = gameManager.State == GameState.InGame;
     }
 
-    void Update()
-    {
-        Move();
-    }
+    void Update() => Move();
 
 
-    public void DisableMovement()
-    {
-        _canMove = false;
-        
-    }
+    public void DisableMovement() => _canMove = false;
+
 
     void Move()
     {
@@ -48,8 +44,5 @@ public class EnemyMovement : MovementBase
             nav.isStopped = true;
             // turn off anim
         }
-        
     }
-
-
 }
