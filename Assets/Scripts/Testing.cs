@@ -5,7 +5,7 @@ using UnityEngine;
 public class Testing : MonoBehaviour
 {
     [SerializeField] private float scoreToAdd = 3f;
-
+    [SerializeField] private PerkManager perkManager;
 
     // Start is called before the first frame update
     void Start()
@@ -22,5 +22,10 @@ public class Testing : MonoBehaviour
     public void AddScore()
     {
         ScoreEvents.AddScore(scoreToAdd);
+    }
+
+    public void TogglePerkUI()
+    {
+        perkManager.ToggleUI();
     }
 }
