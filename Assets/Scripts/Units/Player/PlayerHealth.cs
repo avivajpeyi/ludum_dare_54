@@ -26,8 +26,27 @@ public class PlayerHealth : MonoBehaviour
     bool isDead;
     bool damaged;
 
+    
+    
+    private bool _canTakeDamage = false;
 
-    void Awake()
+    private void Awake()
+    {
+        GameManager.OnBeforeStateChanged += OnStateChanged;
+        SetInitReferences();
+    }
+
+    private void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
+
+    private void OnStateChanged(GameState newState)
+    {
+        if (newState == GameState.InGame) _canTakeDamage = true;
+        else _canTakeDamage = false;
+    }
+    
+    
+
+    void SetInitReferences()
     {
         anim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
@@ -53,6 +72,14 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        if (!_canTakeDamage) return;
+        FlashDamageImage();
+        damaged = false;
+    }
+    
+    
+    void FlashDamageImage()
+    {
         if (damaged)
         {
             if (damageImagePresent)
@@ -64,13 +91,13 @@ public class PlayerHealth : MonoBehaviour
                 damageImage.color = Color.Lerp(damageImage.color, Color.clear,
                     flashSpeed * Time.deltaTime);
         }
-
-        damaged = false;
     }
 
 
     public void TakeDamage(int amount)
     {
+        if (!_canTakeDamage) return;
+        
         damaged = true;
 
         currentHealth -= amount;

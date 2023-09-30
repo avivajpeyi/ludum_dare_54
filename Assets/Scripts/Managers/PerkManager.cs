@@ -30,7 +30,7 @@ public class PerkManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ToggleUI();
+        SetUiActive(false);
     }
 
     // Update is called once per frame
@@ -48,14 +48,18 @@ public class PerkManager : MonoBehaviour
     
     public void ToggleUI()
     {
-        
-        
-        gameObject.SetActive(!gameObject.activeSelf);
+        SetUiActive(!gameObject.activeSelf);
+    }
+
+
+    void SetUiActive(bool active)
+    {
+        gameObject.SetActive(active);
         if (gameObject.activeSelf)
         {
             PopulateSelectPerkList();
         }
-        if (!gameObject.activeSelf)
+        if (active)
         {
             foreach (Transform child in selectPerkUI.transform)
             {

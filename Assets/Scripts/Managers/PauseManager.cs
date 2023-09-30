@@ -13,6 +13,17 @@ public class PauseManager : StaticInstance<PauseManager>
             PauseGame();
         }
     }
+    
+    
+    void OnGUI()
+    {
+        if (gameIsPaused)
+        {
+            // GUI BOX TOP LEFT CORNER
+            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "||");
+        }
+    }
+    
     void PauseGame ()
     {
         if(gameIsPaused)

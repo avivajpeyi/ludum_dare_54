@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MovementBase
 {
 	public float speed = 6f;
 
@@ -11,7 +11,9 @@ public class PlayerMovement : MonoBehaviour
 	int floorMask;
 	float camRayLength = 100f;
 
-	void Awake()
+	
+
+	protected override void SetInitReferences()
 	{
 		floorMask = LayerMask.GetMask ("Floor");
 		anim = GetComponent <Animator> ();
@@ -20,9 +22,12 @@ public class PlayerMovement : MonoBehaviour
 		}
 		playerRigidbody = GetComponent <Rigidbody> (); 
 	}
+	
 
 	void FixedUpdate ()
 	{
+		if (!base._canMove) return;
+		
 		float h = Input.GetAxisRaw ("Horizontal");
 		float v = Input.GetAxisRaw ("Vertical");
 

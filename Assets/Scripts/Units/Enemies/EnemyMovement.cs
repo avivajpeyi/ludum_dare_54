@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MovementBase
 {
     Transform player;
     PlayerHealth playerHealth;
@@ -9,23 +9,30 @@ public class EnemyMovement : MonoBehaviour
     UnityEngine.AI.NavMeshAgent nav;
 
 
-    void Awake ()
+    protected override void SetInitReferences()
     {
-        player = GameObject.FindGameObjectWithTag ("Player").transform;
-        playerHealth = player.GetComponent <PlayerHealth> ();
-        enemyHealth = GetComponent <EnemyHealth> ();
-        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = player.GetComponent<PlayerHealth>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
-    
-    void Update ()
+
+    void Update()
     {
-        if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        Move();
+    }
+
+    void Move()
+    {
+        if (_canMove &&
+            enemyHealth.currentHealth > 0 && 
+            playerHealth.currentHealth > 0)
         {
-            nav.SetDestination (player.position);
+            nav.SetDestination(player.position);
         }
         else
-		{
-        	nav.enabled = false;
+        {
+            nav.enabled = false;
         }
     }
 }

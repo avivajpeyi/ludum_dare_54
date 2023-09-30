@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mine : MonoBehaviour
+public class Mine : AttackerBase
 {
     [SerializeField] private float damage = 20f;
     [SerializeField] private float explosionRadius = 5f;
@@ -13,22 +13,7 @@ public class Mine : MonoBehaviour
         Gizmos.color = new Color(1, 0, 0, 0.5f);
         Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
-
-
-    private void Awake() {
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.layer == LayerMask.NameToLayer("Shootable"))
@@ -37,9 +22,7 @@ public class Mine : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other) {
-        
-    }
+
 
     void Explode(GameObject enemy)
     {
