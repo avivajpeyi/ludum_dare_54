@@ -7,13 +7,27 @@ using UnityEngine;
 public class EnemyCountUI : MonoBehaviour
 {
     public TMP_Text txt;
+    EnemySpawner enemySpawner;
+
+    
+    
+    
+    
+    void Start()
+    {
+        txt = GetComponent<TMP_Text>();
+        enemySpawner = EnemySpawner.Instance;
+    }
+
 
     void Update()
     {
+        
+        // FIXME: on EnemyDeath and EnemySpawned events
         txt.text = String.Format(
             "Enemy: {0}/{1}",
-            EnemySpawner.currentEnemyCount,
-            EnemySpawner.maxEnemies
+            enemySpawner.currentEnemyCount,
+            enemySpawner.maxEnemies
         );
     }
 }
