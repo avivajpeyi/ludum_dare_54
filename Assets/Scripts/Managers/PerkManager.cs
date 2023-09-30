@@ -24,6 +24,7 @@ public class PerkManager : MonoBehaviour
 
     private void Awake() {
         PlayerPerkEvents.eventLevelUp += ToggleUI;
+        ToggleUI();
     }
 
     // Start is called before the first frame update
