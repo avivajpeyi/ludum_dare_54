@@ -9,8 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-/UserSettings/
-EditorUserSettings.asset
+/[Uu]serSettings/
 
 *.DS_Store
 
