@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public int startingHealth = 100;
     public int currentHealth;
     public Slider healthSlider;
+    public bool healthSliderPresent = false;
     public Image damageImage;
     private bool damageImagePresent = false;
     private bool animPresent = false;
@@ -37,10 +38,15 @@ public class PlayerHealth : MonoBehaviour
         {
             damageImagePresent = true;
         }
-
         if (anim != null)
         {
             animPresent = true;
+        }
+        if (healthSlider != null)
+        {
+            healthSliderPresent = true;
+            healthSlider.maxValue = startingHealth;
+            healthSlider.value = startingHealth;
         }
     }
 
@@ -69,7 +75,8 @@ public class PlayerHealth : MonoBehaviour
 
         currentHealth -= amount;
 
-        healthSlider.value = currentHealth;
+        if (healthSliderPresent)
+            healthSlider.value = currentHealth;
 
         playerAudio.Play();
 
