@@ -24,8 +24,16 @@ public class PlayerLevelUI : MonoBehaviour
 
     private void OnStateChanged(GameState newState)
     {
-        if (newState == GameState.InGame) UpdateLvlTxt();
-        else txt.text = "";
+        if (newState == GameState.InGame)
+        {
+            UpdateLvlTxt();
+            Debug.Log($"<color=yellow>{newState}: Lvl UI set</color>");
+        }
+        else
+        {
+            txt.text = "";
+            Debug.Log("<color=yellow>Lvl UI cleared</color>");
+        }
     }
 
 
@@ -39,9 +47,9 @@ public class PlayerLevelUI : MonoBehaviour
     {
         txt.text = String.Format(
             "LVL: {0:00} [{1:000}/{2:000}]",
-            PlayerLevel.currentLevel,
-            PlayerLevel.currentXP,
-            PlayerLevel.XPneeded
+            PlayerLevel.Instance.currentLevel,
+            PlayerLevel.Instance.currentXP,
+            PlayerLevel.Instance.XPneeded
         );
     }
 }
