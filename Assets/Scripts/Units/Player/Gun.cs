@@ -87,7 +87,8 @@ public class Gun : AttackerBase
 
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
-            EnemyHealth enemyHealth = shootHit.collider.GetComponent<EnemyHealth>();
+            Debug.Log($"<color=blue>Hit {shootHit.transform.name}</color>");
+            EnemyHealth enemyHealth = shootHit.transform.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
                 float dmg = damagePerShot + PlayerStats.Instance.GetCurrentDamage();

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+// [RequireComponent(typeof(Rigidbody))]
 public class EnemyHealth : HealthBase
 {
     public float sinkSpeed = 2.5f;
@@ -25,19 +25,20 @@ public class EnemyHealth : HealthBase
     {
         base.Death();
         ScoreEvents.AddScore(scoreValue);
+        StartSinking();
         foreach (Collider c in GetComponents<Collider>())
         {
             Destroy(c);
         }
 
         OnEnemyDeath?.Invoke();
-        StartSinking();
+        
     }
 
 
     public void StartSinking()
     {
-        GetComponent<Rigidbody>().isKinematic = true;
+        
         isSinking = true;
         Destroy(gameObject, 2f);
     }

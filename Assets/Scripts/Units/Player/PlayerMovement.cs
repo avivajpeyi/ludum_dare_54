@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMovement : MovementBase
 {
@@ -20,6 +21,9 @@ public class PlayerMovement : MovementBase
 		}
 		playerRigidbody = GetComponent <Rigidbody> (); 
 	}
+	
+	float CurSpeed => playerRigidbody.velocity.magnitude;
+
 	
 
 	void FixedUpdate ()
@@ -61,5 +65,10 @@ public class PlayerMovement : MovementBase
 	{
 		bool walking = h != 0f || v != 0f;
 		anim.SetBool ("IsWalking", walking);
+		// rotate the player to face the direction of the movement
+		// if (walking)
+		// {
+		// 	transform.rotation = Quaternion.LookRotation(movement);
+		// }
 	}
 }
