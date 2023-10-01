@@ -1851,7 +1851,6 @@ GameObject:
   - component: {fileID: 4114385988602531954}
   - component: {fileID: 4707324061604613942}
   - component: {fileID: 4707324061604613931}
-  - component: {fileID: 4707324061604613943}
   - component: {fileID: 4707324061604613938}
   - component: {fileID: 4707324061604613936}
   - component: {fileID: 4707324061604613937}
@@ -1961,20 +1960,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.9958236, z: 1}
   m_Center: {x: 0, y: 1.455846, z: 0.06999999}
---- !u!136 &4707324061604613943
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4114385988609851066}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.55
-  m_Height: 3.02
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!198 &4707324061604613938
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -6942,12 +6927,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b9d14572410594cb85d40eedfb150c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  currentHealth: 0
+  hitParticles: {fileID: 3960516429097477679, guid: a87ee059a7c3c445ebbb14bc0611ae6c, type: 3}
+  hitClip: {fileID: 8300000, guid: a2a1c7b06808a4d7ba95d3fabc9d3b5c, type: 3}
+  deathClip: {fileID: 8300000, guid: e365a41d3888248fea8ee366dc8f7954, type: 3}
   sinkSpeed: 2.5
   scoreValue: 10
-  deathClip: {fileID: 8300000, guid: c3dc2c88ee7884112b39b9898da6ecbf, type: 3}
-  hitboxCollider: {fileID: 4707324061604613943}
 --- !u!114 &4707324061604613939
 MonoBehaviour:
   m_ObjectHideFlags: 0
