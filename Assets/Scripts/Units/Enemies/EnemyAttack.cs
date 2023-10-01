@@ -17,11 +17,6 @@ public class EnemyAttack : AttackerBase
     float timer;
     GameManager gameManager;
 
-    private void Start()
-    {
-        gameManager = GameManager.Instance;
-        _canAttack = gameManager.State == GameState.InGame; 
-    }
 
     public override void SetInitReferences()
     {
@@ -52,29 +47,28 @@ public class EnemyAttack : AttackerBase
     }
 
 
+    protected override bool _canAttack
+    {
+        get
+        {
+            return (base._canAttack &&
+                    timer >= timeBetweenAttacks &&
+                    playerInRange &&
+                    !enemyHealth.isDead
+                );
+        }
+    }
+
     void Update()
     {
         timer += Time.deltaTime;
-
-        if (
-            base._canAttack &&
-            timer >= timeBetweenAttacks &&
-            playerInRange &&
-            enemyHealth.currentHealth > 0
-        )
-        {
-            Attack();
-        }
+        if (_canAttack) Attack();
     }
 
 
     void Attack()
     {
         timer = 0f;
-
-        if (playerHealth.currentHealth > 0)
-        {
-            playerHealth.TakeDamage(attackDamage);
-        }
+        if (!playerHealth.isDead) playerHealth.TakeDamage(attackDamage);
     }
 }

@@ -12,6 +12,11 @@ public enum PerkType
     IncreaseView
 }
 
+public enum WeaponType
+{
+    Uzi,
+}
+
 class ActivePerk
 {
     public PerkType perkType;

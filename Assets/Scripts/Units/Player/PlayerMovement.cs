@@ -5,8 +5,6 @@ public class PlayerMovement : MovementBase
 	public float speed = 6f;
 
 	Vector3 movement;
-	Animator anim;
-	bool animPresent = false;
 	Rigidbody playerRigidbody;
 	int floorMask;
 	float camRayLength = 100f;

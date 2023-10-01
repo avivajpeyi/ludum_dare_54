@@ -2,13 +2,17 @@
 
 [RequireComponent(typeof(ParticleSystem))]
 [RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Light))]
 public class PlayerShooting : AttackerBase
 {
     public float damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;
+
     public float range = 100f;
+
+    // Mathf.Clamp(accuracy, 0, 1);
+    [Range(0, 1)] public float accuracy = 1f;
+    public int numBulletsInShot = 1;
 
 
     float timer;
@@ -17,9 +21,10 @@ public class PlayerShooting : AttackerBase
     int shootableMask;
     ParticleSystem gunParticles;
     LineRenderer gunLine;
-    AudioSource gunAudio;
     Light gunLight;
     float effectsDisplayTime = 0.2f;
+
+    [SerializeField] private AudioClip sfx;
 
 
     // Override the base class's SetInitReferences() method
@@ -28,11 +33,26 @@ public class PlayerShooting : AttackerBase
     public override void SetInitReferences()
     {
         shootableMask = LayerMask.GetMask("Shootable");
-
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
-        gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
+
+        // Make sure gunLine has numBulletsInShot *2 positions
+        gunLine.positionCount = numBulletsInShot * 2;
+        
+    }
+
+
+    protected override bool _canAttack
+    {
+        get
+        {
+            return (base._canAttack &&
+                    Input.GetButton("Fire1") &&
+                    timer >= timeBetweenBullets &&
+                    Time.timeScale != 0
+                );
+        }
     }
 
 
@@ -40,15 +60,7 @@ public class PlayerShooting : AttackerBase
     {
         timer += Time.deltaTime;
 
-        if (
-            base._canAttack &&
-            Input.GetButton("Fire1") &&
-            timer >= timeBetweenBullets &&
-            Time.timeScale != 0)
-        {
-            Shoot();
-        }
-
+        if (_canAttack) Shoot();
         if (timer >= timeBetweenBullets * effectsDisplayTime)
         {
             DisableEffects();
@@ -63,22 +75,14 @@ public class PlayerShooting : AttackerBase
     }
 
 
-    void Shoot()
+    void _fireBulletIdx(int idx)
     {
-        timer = 0f;
-
-        gunAudio.Play();
-
-        gunLight.enabled = true;
-
-        gunParticles.Stop();
-        gunParticles.Play();
-
-        gunLine.enabled = true;
+        
         gunLine.SetPosition(0, transform.position);
 
         shootRay.origin = transform.position;
-        shootRay.direction = transform.forward;
+        shootRay.direction = transform.forward + new Vector3(
+            Random.Range(-accuracy, accuracy), Random.Range(-accuracy, accuracy), 0);
 
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
@@ -95,5 +99,19 @@ public class PlayerShooting : AttackerBase
         {
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
+    }
+
+    void Shoot()
+    {
+        timer = 0f;
+
+        AudioSystem.Instance.PlaySound(sfx);
+        gunLight.enabled = true;
+
+        gunParticles.Stop();
+        gunParticles.Play();
+        gunLine.enabled = true;
+
+        _fireBulletIdx(0);
     }
 }
