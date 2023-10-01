@@ -26,6 +26,9 @@ public class PerkManager : MonoBehaviour
     [SerializeField] private GameObject selectPerkUI;
 
     [SerializeField] private Sprite uziSprite;
+    [SerializeField] private Sprite rifleSprite;
+    [SerializeField] private Sprite pistolSprite;
+    [SerializeField] private Sprite sniperSprite;
 
     List<ActivePerk> currentPerks = new List<ActivePerk>();
 
