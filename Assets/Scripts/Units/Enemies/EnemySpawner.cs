@@ -10,7 +10,11 @@ public class EnemySpawner : Singleton<EnemySpawner>
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private float spawnDelay = 3f;
-    [SerializeField] public int maxEnemies = 10;
+
+    public int maxEnemies
+    {
+        get { return Mathf.Max(50, 10 + 5 * PlayerLevel.Instance.currentLevel); }
+    }
 
     // Make getter for currentEnemyCount public, setter private
     public int currentEnemyCount { get; private set; } = 0;

@@ -43,7 +43,7 @@ public class PlayerHealth : Singleton<PlayerHealth>
         if (newState == GameState.InGame)
         {
             _canTakeDamage = true;
-            Debug.Log("<color=yellow>Player takeDamage enabled</color>");
+            Debug.Log($"<color=yellow>{newState}: Player takeDamage enabled</color>");
         }
         else
         {

@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class PlayerLevel : Singleton<PlayerLevel>
 {
-    public static int currentLevel = 1;
-    public static int currentXP = 0;
+    public  int currentLevel = 1;
+    public  int currentXP = 0;
     
 
-    public static int XPneeded => Mathf.Max(10,currentLevel * 10);
+    public  int XPneeded => Mathf.Max(10,currentLevel * 10);
     
     
     // On Increase XP Action
@@ -18,7 +18,7 @@ public class PlayerLevel : Singleton<PlayerLevel>
     
     
 
-    static void LevelUp()
+    void LevelUp()
     {
         currentLevel++;
         currentXP = 0;
