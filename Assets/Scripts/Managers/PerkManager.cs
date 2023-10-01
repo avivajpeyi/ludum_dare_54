@@ -13,11 +13,6 @@ public enum PerkType
     Weapon
 }
 
-public enum WeaponType
-{
-    Uzi,
-}
-
 class ActivePerk
 {
     public PerkType perkType;
@@ -115,7 +110,7 @@ public class PerkManager : MonoBehaviour
                 
                 case 4:
                     // Uzi weapon perk
-                    InstantiatePerkTile(PerkType.Weapon, WeaponType.Uzi);
+                    InstantiatePerkTile(PerkType.Weapon);
                     break;
                 
                 default:
@@ -125,8 +120,42 @@ public class PerkManager : MonoBehaviour
         }
     }
 
-    void InstantiatePerkTile(PerkType perkType, WeaponType weaponType = WeaponType.Uzi)
+    void InstantiatePerkTile(PerkType perkType, WeaponNames weaponType = WeaponNames.Uzi)
     {
+        if (perkType == PerkType.Weapon)
+        {
+            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 6f));
+            switch (randomNumber)
+            {
+                case 1:
+                    weaponType = WeaponNames.Pistol;
+                    break;
+                
+                case 2:
+                    weaponType = WeaponNames.Uzi;
+                    break;
+                
+                case 3:
+                    weaponType = WeaponNames.Rifle;
+                    break;
+                
+                case 4:
+                    // weaponType = WeaponNames.RocketLauncher;
+                    break;
+                
+                case 5:
+                    weaponType = WeaponNames.Sniper;
+                    break;
+                
+                case 6:
+                    // weaponType = WeaponNames.Shotgun;
+                    break;
+                
+                default:
+                    break;
+            }
+
+        }
         GameObject perkTileObject = Instantiate(perkTilePrefab, selectPerkUI.transform);
         PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
         Button perkButton = perkTile.GetComponent<Button>();
@@ -170,11 +199,41 @@ public class PerkManager : MonoBehaviour
         }
         else
         {
+            ChangeWeapon changeWeapon = perkTileObject.AddComponent<ChangeWeapon>();
             switch (weaponType)
             {
-                case WeaponType.Uzi:
-                    ChangeWeapon changeWeapon = perkTileObject.AddComponent<ChangeWeapon>();
+                case WeaponNames.Uzi:
                     perkTile.SetSprite(uziSprite);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                case WeaponNames.Pistol:
+                    perkTile.SetSprite(uziSprite);
+                    changeWeapon.SetWeaponToChangeTo(WeaponNames.Pistol);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                case WeaponNames.Sniper:
+                    perkTile.SetSprite(uziSprite);
+                    changeWeapon.SetWeaponToChangeTo(WeaponNames.Sniper);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                case WeaponNames.RocketLauncher:
+                    perkTile.SetSprite(uziSprite);
+                    changeWeapon.SetWeaponToChangeTo(WeaponNames.RocketLauncher);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                case WeaponNames.Shotgun:
+                    perkTile.SetSprite(uziSprite);
+                    changeWeapon.SetWeaponToChangeTo(WeaponNames.Shotgun);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                case WeaponNames.Rifle:
+                    perkTile.SetSprite(uziSprite);
+                    changeWeapon.SetWeaponToChangeTo(WeaponNames.Rifle);
                     perkButton.onClick.AddListener(changeWeapon.OnClick);
                     break;
                 
@@ -186,7 +245,7 @@ public class PerkManager : MonoBehaviour
 
     }
 
-    void AddSelectedPerkToActivePerksList(PerkType perkType, WeaponType weaponType)
+    void AddSelectedPerkToActivePerksList(PerkType perkType, WeaponNames weaponType)
     {
         var perk = currentPerks.Find(perk => perk.perkType == perkType);
         if (perk != null)

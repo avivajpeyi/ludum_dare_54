@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class ChangeWeapon : PerkBase
 {
-    [SerializeField] private WeaponType weaponType = WeaponType.Uzi;
+    [SerializeField] private WeaponNames weaponType = WeaponNames.Uzi;
 
     public override void OnClick()
     {
         PlayerPerkEvents.ChangeWeapon(weaponType);
     }
 
-    public void SetWeaponToChangeTo(WeaponType weaponType)
+    public void SetWeaponToChangeTo(WeaponNames weaponType)
     {
         this.weaponType = weaponType;
     }
