@@ -127,7 +127,7 @@ public class PerkManager : MonoBehaviour
     {
         if (perkType == PerkType.Weapon)
         {
-            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 6f));
+            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 4f));
             switch (randomNumber)
             {
                 case 1:
@@ -143,11 +143,11 @@ public class PerkManager : MonoBehaviour
                     break;
                 
                 case 4:
-                    // weaponType = WeaponNames.RocketLauncher;
+                    weaponType = WeaponNames.Sniper;
                     break;
                 
                 case 5:
-                    weaponType = WeaponNames.Sniper;
+                    // weaponType = WeaponNames.RocketLauncher;
                     break;
                 
                 case 6:
@@ -211,13 +211,13 @@ public class PerkManager : MonoBehaviour
                     break;
                 
                 case WeaponNames.Pistol:
-                    perkTile.SetSprite(uziSprite);
+                    perkTile.SetSprite(pistolSprite);
                     changeWeapon.SetWeaponToChangeTo(WeaponNames.Pistol);
                     perkButton.onClick.AddListener(changeWeapon.OnClick);
                     break;
                 
                 case WeaponNames.Sniper:
-                    perkTile.SetSprite(uziSprite);
+                    perkTile.SetSprite(sniperSprite);
                     changeWeapon.SetWeaponToChangeTo(WeaponNames.Sniper);
                     perkButton.onClick.AddListener(changeWeapon.OnClick);
                     break;
@@ -235,7 +235,7 @@ public class PerkManager : MonoBehaviour
                     break;
                 
                 case WeaponNames.Rifle:
-                    perkTile.SetSprite(uziSprite);
+                    perkTile.SetSprite(rifleSprite);
                     changeWeapon.SetWeaponToChangeTo(WeaponNames.Rifle);
                     perkButton.onClick.AddListener(changeWeapon.OnClick);
                     break;
