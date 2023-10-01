@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
 
     public GameState State { get; private set; }
 
-    [SerializeField] bool DebugMode = false;
+    [SerializeField] public bool DebugMode = false;
 
 
     [Tooltip("Time when the game is over")]

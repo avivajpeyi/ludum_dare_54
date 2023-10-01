@@ -41,6 +41,12 @@ public class EnemySpawner : Singleton<EnemySpawner>
     {
         base.Awake();
         EnemyHealth.OnEnemyDeath += DecreaseEnemyCount;
+
+        foreach (var t in spawnPoints)
+        {
+            t.GetComponent<MeshRenderer>().enabled = false;
+        }
+        
     }
 
     private void OnDestroy()

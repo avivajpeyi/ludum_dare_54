@@ -8,6 +8,13 @@ public class AudioSystem : StaticInstance<AudioSystem> {
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _soundsSource;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(transform.gameObject);
+    }
+
+
     public void PlayMusic(AudioClip clip) {
         _musicSource.clip = clip;
         _musicSource.Play();

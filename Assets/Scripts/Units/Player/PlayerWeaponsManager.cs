@@ -7,8 +7,7 @@ public class PlayerWeaponsManager : Singleton<PlayerWeaponsManager>
 {
     Dictionary<WeaponNames, GameObject> weapons =
         new Dictionary<WeaponNames, GameObject>();
-
-    [SerializeField] bool debugMode = false;
+    
 
     WeaponNames activeWeapon = WeaponNames.Pistol;
 
@@ -44,7 +43,7 @@ public class PlayerWeaponsManager : Singleton<PlayerWeaponsManager>
 
     private void Update()
     {
-        if (debugMode)
+        if (GameManager.Instance.DebugMode)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
@@ -65,8 +64,8 @@ public enum WeaponNames
 {
     Pistol,
     Uzi,
-    Shotgun,
+    
     Sniper,
     Rifle,
-    RocketLauncher
+
 }

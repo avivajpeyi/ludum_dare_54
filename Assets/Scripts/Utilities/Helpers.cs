@@ -1,4 +1,6 @@
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// A static class for general helpful methods
@@ -16,5 +18,14 @@ public static class Helpers
         foreach (Transform child in t) Object.Destroy(child.gameObject);
     }
     
+    // [MenuItem("Light Brigade/Debug/Force Cleanup NavMesh")]
+    // public static void ForceCleanupNavMesh()
+    // {
+    //     if (Application.isPlaying)
+    //         return;
+    //
+    //     NavMesh.RemoveAllNavMeshData();
+    // }
+    //
     
 }

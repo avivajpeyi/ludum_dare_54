@@ -27,16 +27,20 @@ public class EnemyCountUI : MonoBehaviour
     {
         txt = GetComponent<TMP_Text>();
         enemySpawner = EnemySpawner.Instance;
+        txt.text = "";
         UpdateTxt();
     }
 
 
     void UpdateTxt()
     {
-        txt.text = String.Format(
-            "Enemy: {0}/{1}",
-            enemySpawner.currentEnemyCount,
-            enemySpawner.maxEnemies
-        );
+        if (GameManager.Instance.DebugMode)
+        {
+            txt.text = String.Format(
+                "Enemy: {0}/{1}",
+                enemySpawner.currentEnemyCount,
+                enemySpawner.maxEnemies
+            );
+        }
     }
 }
