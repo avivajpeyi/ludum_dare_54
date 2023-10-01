@@ -54,6 +54,7 @@ MonoBehaviour:
   perkTilePrefab: {fileID: 4340012597322934566, guid: 26cc271a0de2d9b4aae112c11ae59e97, type: 3}
   activePerkUI: {fileID: 3315918553530949101}
   selectPerkUI: {fileID: 3315918553936723634}
+  uziSprite: {fileID: 21300000, guid: 27a43252c0da8e14da134a9c6acd0111, type: 3}
 --- !u!1 &3315918553530949101
 GameObject:
   m_ObjectHideFlags: 0
