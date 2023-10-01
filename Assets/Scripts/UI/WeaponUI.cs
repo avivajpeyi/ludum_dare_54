@@ -28,11 +28,11 @@ public class WeaponUI : MonoBehaviour
         PlayerPerkEvents.eventChangeWeapon -= SetWeaponDisplay;
     }
 
-    void SetWeaponDisplay(WeaponType weaponType)
+    void SetWeaponDisplay(WeaponNames weaponType)
     {
         switch (weaponType)
         {
-            case WeaponType.Uzi:
+            case WeaponNames.Uzi:
                 image.sprite = uziSprite;
                 break;
             

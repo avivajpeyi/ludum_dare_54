@@ -25,6 +25,8 @@ public class PlayerWeaponsManager : MonoBehaviour
         }
 
         ChangeWeapon(activeWeapon);
+
+        PlayerPerkEvents.eventChangeWeapon += ChangeWeapon;
     }
 
     public void ChangeWeapon(WeaponNames weaponName)
@@ -49,6 +51,10 @@ public class PlayerWeaponsManager : MonoBehaviour
                 ChangeWeapon(weaponsAvailible[UnityEngine.Random.Range(0, weaponsAvailible.Count)]);
             }
         }
+    }
+
+    private void OnDestroy() {
+        PlayerPerkEvents.eventChangeWeapon -= ChangeWeapon;
     }
 }
 

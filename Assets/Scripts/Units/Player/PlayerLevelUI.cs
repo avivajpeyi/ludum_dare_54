@@ -13,6 +13,7 @@ public class PlayerLevelUI : MonoBehaviour
     {
         GameManager.OnAfterStateChanged += OnStateChanged;
         PlayerLevel.OnIncreaseXP += UpdateLvlTxt;
+        txt = GetComponent<TMP_Text>();
     }
 
     private void OnDestroy()
