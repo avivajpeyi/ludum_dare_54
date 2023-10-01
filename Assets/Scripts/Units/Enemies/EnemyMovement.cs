@@ -19,22 +19,15 @@ public class EnemyMovement : MovementBase
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
-    private void Start()
-    {
-        gameManager = GameManager.Instance;
-        _canMove = gameManager.State == GameState.InGame;
-    }
 
     void Update() => Move();
 
-
-    public void DisableMovement() => _canMove = false;
+    
 
 
     void Move()
     {
-        if (enemyHealth.currentHealth > 0 &&
-            playerHealth.currentHealth > 0)
+        if (_canMove && !playerHealth.isDead)
         {
             nav.isStopped = false;
             nav.SetDestination(player.position);
