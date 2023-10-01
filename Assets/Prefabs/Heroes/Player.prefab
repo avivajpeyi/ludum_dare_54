@@ -1224,7 +1224,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 16763f16be2139e428bb3c7e0a6f8fcd, type: 2}
+  - {fileID: 2100000, guid: 565a36848934faa4db08756381f0ec23, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2288,7 +2288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a770ded0956b48498a6036c6228ba53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 1
+  speed: 6
   baseDamage: 2
 --- !u!114 &4899257147027853766
 MonoBehaviour:
@@ -2302,7 +2302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1abd2d5911eb34e3ea2c23c1a76d5879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 6
 --- !u!114 &4899257147027853767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2315,9 +2314,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e84f1d0142749b4b1956054f1ae782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitParticles: {fileID: 194062, guid: bb954c7832c9a9845b017b284d33fbc8, type: 3}
-  hitClip: {fileID: 0}
-  deathClip: {fileID: 0}
+  hitParticles: {fileID: 3960516429097477679, guid: a87ee059a7c3c445ebbb14bc0611ae6c, type: 3}
+  hitClip: {fileID: 8300000, guid: 9922a12f34d0a084aab32de985459723, type: 3}
+  deathClip: {fileID: 8300000, guid: d36a393bca4582043982db9089e1694f, type: 3}
   healthSlider: {fileID: 0}
   damageImage: {fileID: 0}
   flashSpeed: 5
@@ -3367,6 +3366,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4899257147020588872}
     m_Modifications:
+    - target: {fileID: 7975416056134402374, guid: 4c580536aad514d84bc463b7eff4f254, type: 3}
+      propertyPath: name
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7975416056543771385, guid: 4c580536aad514d84bc463b7eff4f254, type: 3}
+      propertyPath: name
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7975416057126728829, guid: 4c580536aad514d84bc463b7eff4f254, type: 3}
       propertyPath: m_RootOrder
       value: 23

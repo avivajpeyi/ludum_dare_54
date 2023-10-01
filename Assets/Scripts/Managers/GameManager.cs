@@ -21,10 +21,8 @@ public class GameManager : Singleton<GameManager>
     bool CanRestart => State == GameState.GameOver && Time.time > timeWhenGameOver + 2f;
 
 
-    // Kick the game off with the first state
-    void Awake()
+    private void Start()
     {
-        base.Awake();
         ChangeState(GameState.Initalisation);
     }
 
@@ -107,7 +105,13 @@ public class GameManager : Singleton<GameManager>
             ChangeState(GameState.InGame);
         else if (CanRestart && Input.anyKeyDown)
             UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        
+        if (Input.GetKeyDown(KeyCode.Equals))
+            DebugMode = !DebugMode;
     }
+    
+    
+    
 }
 
 
