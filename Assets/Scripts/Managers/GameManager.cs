@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     public static event Action<GameState> OnAfterStateChanged;
 
 
-    public GameState State { get; private set; }
+    public GameState State { get; private set; } = GameState.Initalisation;
 
     [SerializeField] public bool DebugMode = false;
 
