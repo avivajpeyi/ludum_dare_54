@@ -3,7 +3,7 @@
 [RequireComponent(typeof(ParticleSystem))]
 [RequireComponent(typeof(LineRenderer))]
 [RequireComponent(typeof(Light))]
-public class PlayerShooting : AttackerBase
+public class Gun : AttackerBase
 {
     public float damagePerShot = 20;
     public float timeBetweenBullets = 0.15f;

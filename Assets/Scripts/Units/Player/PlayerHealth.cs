@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerHealth : HealthBase
 {
-
     public Slider healthSlider;
-    public bool healthSliderPresent = false;
+    bool healthSliderPresent = false;
     public Image damageImage;
     private bool damageImagePresent = false;
     
@@ -21,7 +20,6 @@ public class PlayerHealth : HealthBase
     
     protected override void SetInitReferences()
     {
-
         
         if (damageImage != null)
         {
