@@ -30,22 +30,22 @@ public class PerkController : MonoBehaviour
     {
         
         
-        //
-        // uziButton = transform.Find("UziButton").GetComponent<Button>();
-        // rifleButton = transform.Find("RifleButton").GetComponent<Button>();
-        // sniperButton = transform.Find("SniperButton").GetComponent<Button>();
-        // pistolButton = transform.Find("PistolButton").GetComponent<Button>();
-        // damageButton = transform.Find("DMGButton").GetComponent<Button>();
-        // viewButton = transform.Find("EYEButton").GetComponent<Button>();
-        // speedButton = transform.Find("SPDButton").GetComponent<Button>();
-        //
-        // uziButton.onClick.AddListener(ChangeToUzi);
-        // rifleButton.onClick.AddListener(ChangeToRifle);
-        // sniperButton.onClick.AddListener(ChangeToSniper);
-        // pistolButton.onClick.AddListener(ChangeToPistol);
-        // damageButton.onClick.AddListener(IncreaseDMG);
-        // viewButton.onClick.AddListener(IncreaseView);
-        // speedButton.onClick.AddListener(IncreaseSpeed);
+        
+        uziButton = transform.Find("UziButton").GetComponent<Button>();
+        rifleButton = transform.Find("RifleButton").GetComponent<Button>();
+        sniperButton = transform.Find("SniperButton").GetComponent<Button>();
+        pistolButton = transform.Find("PistolButton").GetComponent<Button>();
+        damageButton = transform.Find("DMGButton").GetComponent<Button>();
+        viewButton = transform.Find("EYEButton").GetComponent<Button>();
+        speedButton = transform.Find("SPDButton").GetComponent<Button>();
+        
+        uziButton.onClick.AddListener(ChangeToUzi);
+        rifleButton.onClick.AddListener(ChangeToRifle);
+        sniperButton.onClick.AddListener(ChangeToSniper);
+        pistolButton.onClick.AddListener(ChangeToPistol);
+        damageButton.onClick.AddListener(IncreaseDMG);
+        viewButton.onClick.AddListener(IncreaseView);
+        speedButton.onClick.AddListener(IncreaseSpeed);
 
         DisablePerkMenu();
     }
