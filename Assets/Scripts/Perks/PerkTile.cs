@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class PerkTile : MonoBehaviour
 {
     [SerializeField] private TMP_Text primaryText;
     [SerializeField] private TMP_Text secondaryText;
+    [SerializeField] private Image image;
 
     // Start is called before the first frame update
     void Start()
@@ -40,5 +42,11 @@ public class PerkTile : MonoBehaviour
         primaryText.fontSize = 24;
         secondaryText.fontSize = 20;
         secondaryText.transform.position = new Vector2(secondaryText.transform.position.x, secondaryText.transform.position.y + 30);
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        image.sprite = sprite;
+        image.enabled = true;
     }
 }

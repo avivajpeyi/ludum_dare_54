@@ -9,7 +9,8 @@ public enum PerkType
 {
     DamageBuff,
     DamageBuffBuff,
-    IncreaseView
+    IncreaseView,
+    Weapon
 }
 
 public enum WeaponType
@@ -29,6 +30,8 @@ public class PerkManager : MonoBehaviour
     [SerializeField] private GameObject activePerkUI;
     [SerializeField] private GameObject selectPerkUI;
 
+    [SerializeField] private Sprite uziSprite;
+
     List<ActivePerk> currentPerks = new List<ActivePerk>();
 
     int numberOfPerksToPick = 2;
@@ -37,7 +40,6 @@ public class PerkManager : MonoBehaviour
     {
         PlayerPerkEvents.eventLevelUp += ToggleUI;
         GameManager.OnBeforeStateChanged += OnStateChanged;
-        SetInitReferences();
     }
 
     private void OnDestroy()
@@ -53,13 +55,6 @@ public class PerkManager : MonoBehaviour
         {
             SetUiActive(false);
         }
-    }
-    
-    
-
-    private void SetInitReferences() {
-        
-        
     }
 
     // Start is called before the first frame update
@@ -99,23 +94,28 @@ public class PerkManager : MonoBehaviour
     public void PopulateSelectPerkList(){
         for (int i = 0; i < numberOfPerksToPick; i++)
         {
-            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 3f));
+            int randomNumber = Mathf.CeilToInt(UnityEngine.Random.Range(0f, 4f));
             switch (randomNumber)
             {
                 // case number ranges should be based on number of perks and their rarity
                 case 1:
                     // Damage perk
-                    InstantiatePerkTile("DMG+", "", selectPerkUI.transform, PerkType.DamageBuff);
+                    InstantiatePerkTile(PerkType.DamageBuff);
                     break;
 
                 case 2:
                     // Increase view perk
-                    InstantiatePerkTile("View+", "", selectPerkUI.transform, PerkType.IncreaseView);
+                    InstantiatePerkTile(PerkType.IncreaseView);
                     break;
 
                 case 3:
-                    // Increase view perk
-                    InstantiatePerkTile("DMG++", "", selectPerkUI.transform, PerkType.DamageBuffBuff);
+                    // Increase damage more perk
+                    InstantiatePerkTile(PerkType.DamageBuffBuff);
+                    break;
+                
+                case 4:
+                    // Uzi weapon perk
+                    InstantiatePerkTile(PerkType.Weapon, WeaponType.Uzi);
                     break;
                 
                 default:
@@ -125,66 +125,69 @@ public class PerkManager : MonoBehaviour
         }
     }
 
-    void InstantiatePerkTile(string primaryText, string secondaryText, Transform parent, PerkType perkType)
+    void InstantiatePerkTile(PerkType perkType, WeaponType weaponType = WeaponType.Uzi)
     {
-        GameObject perkTileObject = Instantiate(perkTilePrefab, parent);
+        GameObject perkTileObject = Instantiate(perkTilePrefab, selectPerkUI.transform);
         PerkTile perkTile = perkTileObject.GetComponent<PerkTile>();
-        perkTile.SetPrimaryText(primaryText);
-        perkTile.SetSecondaryText(secondaryText);
         Button perkButton = perkTile.GetComponent<Button>();
         perkButton.onClick.AddListener(DisablePerksUi);
         perkButton.onClick.AddListener(() => GameManager.Instance.ChangeState(GameState.InGame));
-        switch (perkType)
+        perkButton.onClick.AddListener(() => { AddSelectedPerkToActivePerksList(perkType, weaponType); });
+        if (perkType != PerkType.Weapon)
         {
-            case PerkType.DamageBuff:
-                DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
-                perkButton.onClick.AddListener(damageBuff.OnClick);
-                perkButton.onClick.AddListener(AddBuffPerk);
-                
-                break;
+            switch (perkType)
+            {
+                case PerkType.DamageBuff:
+                    DamageBuff damageBuff = perkTileObject.AddComponent<DamageBuff>();
+                    perkTile.SetPrimaryText("DMG+");
+                    perkTile.SetSecondaryText("");
+                    perkButton.onClick.AddListener(damageBuff.OnClick);
+                    
+                    break;
 
-            case PerkType.DamageBuffBuff:
-                DamageBuff damageBuffBuff = perkTileObject.AddComponent<DamageBuff>();
-                damageBuffBuff.SetDamageToBuff(2f);
-                perkButton.onClick.AddListener(damageBuffBuff.OnClick);
-                perkButton.onClick.AddListener(AddBuffBuffPerk);
-                
-                break;
+                case PerkType.DamageBuffBuff:
+                    DamageBuff damageBuffBuff = perkTileObject.AddComponent<DamageBuff>();
+                    damageBuffBuff.SetDamageToBuff(2f);
+                    perkTile.SetPrimaryText("DMG++");
+                    perkTile.SetSecondaryText("");
+                    perkButton.onClick.AddListener(damageBuffBuff.OnClick);
+                    
+                    break;
 
-            case PerkType.IncreaseView:
-                IncreaseView increaseView = perkTileObject.AddComponent<IncreaseView>();
-                perkButton.onClick.AddListener(increaseView.OnClick);
-                perkButton.onClick.AddListener(AddIncreaseViewPerk);
+                case PerkType.IncreaseView:
+                    IncreaseView increaseView = perkTileObject.AddComponent<IncreaseView>();
+                    perkTile.SetPrimaryText("View+");
+                    perkTile.SetSecondaryText("");
+                    perkButton.onClick.AddListener(increaseView.OnClick);
+                    
+                    break;
                 
-                break;
-            
-            default:
-                Debug.Log("InstantiatePerkTile switch fell through...");
-                break;
+                default:
+                    Debug.Log("InstantiatePerkTile switch fell through...");
+                    break;
+            }
+
+        }
+        else
+        {
+            switch (weaponType)
+            {
+                case WeaponType.Uzi:
+                    ChangeWeapon changeWeapon = perkTileObject.AddComponent<ChangeWeapon>();
+                    perkTile.SetSprite(uziSprite);
+                    perkButton.onClick.AddListener(changeWeapon.OnClick);
+                    break;
+                
+                default:
+                    Debug.Log("InstatiateWeaponTile switch fell through...");
+                    break;
+            }
         }
 
     }
 
-    void AddBuffPerk()
+    void AddSelectedPerkToActivePerksList(PerkType perkType, WeaponType weaponType)
     {
-        AddSelectedPerkToActivePerksList(PerkType.DamageBuff);
-    }
-
-    void AddBuffBuffPerk()
-    {
-        AddSelectedPerkToActivePerksList(PerkType.DamageBuffBuff);
-    }
-
-    void AddIncreaseViewPerk()
-    {
-        AddSelectedPerkToActivePerksList(PerkType.IncreaseView);
-    }
-
-    void AddSelectedPerkToActivePerksList(PerkType perkType)
-    {
-        // if list does not contain perk, add it
-        // ActivePerk activePerk = new ActivePerk();
-        // activePerk.perkType = perkType;
         var perk = currentPerks.Find(perk => perk.perkType == perkType);
         if (perk != null)
         {
