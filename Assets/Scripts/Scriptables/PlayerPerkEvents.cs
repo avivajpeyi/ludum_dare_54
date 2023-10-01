@@ -26,6 +26,16 @@ public class PlayerPerkEvents : ScriptableObject
         }
     }
 
+    public delegate void ChangeWeaponDelegate(WeaponType weaponType);
+    public static event ChangeWeaponDelegate eventChangeWeapon;
+    public static void ChangeWeapon(WeaponType weaponType)
+    {
+        if (eventChangeWeapon != null)
+        {
+            eventChangeWeapon(weaponType);
+        }
+    }
+
     public delegate void LevelUpDelegate();
     public static event LevelUpDelegate eventLevelUp;
     public static void LevelUp()
