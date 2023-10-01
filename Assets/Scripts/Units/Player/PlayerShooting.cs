@@ -12,6 +12,8 @@ public class PlayerShooting : AttackerBase
 
     // Mathf.Clamp(accuracy, 0, 1);
     [Range(0, 1)] public float accuracy = 1f;
+
+    private float missfireAmount => accuracy - 1;
     public int numBulletsInShot = 1;
 
 
@@ -39,7 +41,6 @@ public class PlayerShooting : AttackerBase
 
         // Make sure gunLine has numBulletsInShot *2 positions
         gunLine.positionCount = numBulletsInShot * 2;
-        
     }
 
 
@@ -77,12 +78,12 @@ public class PlayerShooting : AttackerBase
 
     void _fireBulletIdx(int idx)
     {
-        
         gunLine.SetPosition(0, transform.position);
 
         shootRay.origin = transform.position;
         shootRay.direction = transform.forward + new Vector3(
-            Random.Range(-accuracy, accuracy), Random.Range(-accuracy, accuracy), 0);
+            Random.Range(-missfireAmount, missfireAmount),
+            Random.Range(-missfireAmount, missfireAmount), 0);
 
         if (Physics.Raycast(shootRay, out shootHit, range, shootableMask))
         {
