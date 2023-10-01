@@ -66,9 +66,9 @@ public class PlayerMovement : MovementBase
 		bool walking = h != 0f || v != 0f;
 		anim.SetBool ("IsWalking", walking);
 		// rotate the player to face the direction of the movement
-		if (walking)
-		{
-			transform.rotation = Quaternion.LookRotation(movement);
-		}
+		// if (walking)
+		// {
+		// 	transform.rotation = Quaternion.LookRotation(movement);
+		// }
 	}
 }

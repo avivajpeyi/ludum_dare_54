@@ -66,8 +66,10 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
         int randomIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
-        Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex].position,
+        GameObject e = Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex]
+        .position,
             Quaternion.identity);
+        e.name = $"enemy_{currentEnemyCount:000}";
         currentEnemyCount++;
         _lastSpawnTime = Time.time;
         OnEnemySpawned?.Invoke();
