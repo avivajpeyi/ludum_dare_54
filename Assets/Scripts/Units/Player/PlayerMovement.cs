@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerMovement : MovementBase
 {
-	public float speed = 6f;
+	public float speed => PlayerStats.Instance.speed;
 
 	Vector3 movement;
 	Rigidbody playerRigidbody;

@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class WeaponBase : MonoBehaviour
 {
-    [SerializeField]
-    public WeaponNames name;
+    [SerializeField] public WeaponNames name;
+    [SerializeField] public Sprite icon;
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : Singleton<PlayerStats>
 {
-    [SerializeField] private float baseSpeed = 1f;
+    [SerializeField] public float speed = 6f;
     [SerializeField] private float baseDamage = 2f;
 
     float currentSpeed = 0;
@@ -13,7 +13,6 @@ public class PlayerStats : Singleton<PlayerStats>
     protected override void Awake()
     {
         base.Awake();
-        currentSpeed = baseSpeed;
         currentDamage = baseDamage;
         PlayerPerkEvents.eventBuffDamage += BuffDamage;
     }
@@ -24,7 +23,7 @@ public class PlayerStats : Singleton<PlayerStats>
         PlayerPerkEvents.eventBuffDamage -= BuffDamage;
     }
 
-    void BuffDamage(float damageToBuff)
+    public void BuffDamage(float damageToBuff)
     {
         currentDamage += damageToBuff;
     }

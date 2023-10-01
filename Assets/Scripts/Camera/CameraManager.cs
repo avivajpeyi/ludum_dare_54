@@ -54,6 +54,11 @@ public class CameraManager : MonoBehaviour
         camIdx = Mathf.Clamp(camIdx + 1, 0, vcams.Length - 1);
         SetActiveCamera();
     }
+    
+    public bool AtMaxZoom()
+    {
+        return camIdx == vcams.Length - 1;
+    }
 
 
     private void SetActiveCamera()

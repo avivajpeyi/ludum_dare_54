@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponsManager : MonoBehaviour
+public class PlayerWeaponsManager : Singleton<PlayerWeaponsManager>
 {
     Dictionary<WeaponNames, GameObject> weapons =
         new Dictionary<WeaponNames, GameObject>();
@@ -17,6 +17,7 @@ public class PlayerWeaponsManager : MonoBehaviour
 
     private void Awake()
     {
+        base.Awake();
         foreach (var weapon in GetComponentsInChildren<WeaponBase>())
         {
             weapons.Add(weapon.GetComponent<WeaponBase>().name,
@@ -26,7 +27,7 @@ public class PlayerWeaponsManager : MonoBehaviour
 
         ChangeWeapon(activeWeapon);
 
-        PlayerPerkEvents.eventChangeWeapon += ChangeWeapon;
+        // PlayerPerkEvents.eventChangeWeapon += ChangeWeapon;
     }
 
     public void ChangeWeapon(WeaponNames weaponName)
@@ -54,7 +55,7 @@ public class PlayerWeaponsManager : MonoBehaviour
     }
 
     private void OnDestroy() {
-        PlayerPerkEvents.eventChangeWeapon -= ChangeWeapon;
+        // PlayerPerkEvents.eventChangeWeapon -= ChangeWeapon;
     }
 }
 
