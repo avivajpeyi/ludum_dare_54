@@ -1,31 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MovementBase
 {
     Transform player;
     PlayerHealth playerHealth;
     EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
+    GameManager gameManager;
 
 
-    void Awake ()
+    protected override void SetInitReferences()
     {
-        player = GameObject.FindGameObjectWithTag ("Player").transform;
-        playerHealth = player.GetComponent <PlayerHealth> ();
-        enemyHealth = GetComponent <EnemyHealth> ();
-        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        player = playerHealth.transform;
+        enemyHealth = GetComponent<EnemyHealth>();
+        nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
+
+
+    void Update() => Move();
+
     
-    void Update ()
+
+
+    void Move()
     {
-        if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        if (_canMove && !playerHealth.isDead)
         {
-            nav.SetDestination (player.position);
+            nav.isStopped = false;
+            nav.SetDestination(player.position);
         }
         else
-		{
-        	nav.enabled = false;
+        {
+            nav.isStopped = true;
+            // turn off anim
         }
     }
 }

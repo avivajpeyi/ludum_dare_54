@@ -15,6 +15,7 @@ public class ScoreEvents : ScriptableObject {
     public static void AddScore(float scoreToAdd)
     {
         scoreCount += scoreToAdd;
+        PlayerLevel.Instance.IncreaseXP((int)scoreToAdd);
     }
 
     public static float GetScore()

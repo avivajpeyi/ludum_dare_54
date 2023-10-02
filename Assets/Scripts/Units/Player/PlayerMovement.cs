@@ -1,17 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MovementBase
 {
-	public float speed = 6f;
+	public float speed => PlayerStats.Instance.speed;
 
 	Vector3 movement;
-	Animator anim;
-	bool animPresent = false;
 	Rigidbody playerRigidbody;
 	int floorMask;
 	float camRayLength = 100f;
 
-	void Awake()
+	
+
+	protected override void SetInitReferences()
 	{
 		floorMask = LayerMask.GetMask ("Floor");
 		anim = GetComponent <Animator> ();
@@ -20,9 +21,15 @@ public class PlayerMovement : MonoBehaviour
 		}
 		playerRigidbody = GetComponent <Rigidbody> (); 
 	}
+	
+	float CurSpeed => playerRigidbody.velocity.magnitude;
+
+	
 
 	void FixedUpdate ()
 	{
+		if (!base._canMove) return;
+		
 		float h = Input.GetAxisRaw ("Horizontal");
 		float v = Input.GetAxisRaw ("Vertical");
 
@@ -58,5 +65,10 @@ public class PlayerMovement : MonoBehaviour
 	{
 		bool walking = h != 0f || v != 0f;
 		anim.SetBool ("IsWalking", walking);
+		// rotate the player to face the direction of the movement
+		// if (walking)
+		// {
+		// 	transform.rotation = Quaternion.LookRotation(movement);
+		// }
 	}
 }
