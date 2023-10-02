@@ -125,7 +125,7 @@ public class GameManager : Singleton<GameManager>
             DebugMode = !DebugMode;
             PlayerStats.Instance.damage = PlayerStats.Instance.maxDamage;
             PlayerStats.Instance.speed = PlayerStats.Instance.maxSpeed;
-            // GameSpotlight.Instance.IncreaseSpotDistance();
+            GameSpotlight.Instance.IncreaseSpotDistance();
         }
             
     }

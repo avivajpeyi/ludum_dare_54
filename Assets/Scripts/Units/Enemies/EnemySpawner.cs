@@ -20,6 +20,8 @@ public class EnemySpawner : Singleton<EnemySpawner>
         {
             if (curLvl < INTRO_DIFFIULTY_ENDS_AT_LVL)
                 return 3f;
+            else if (curLvl > 15)
+                return 0.1f;
             else
             {
                 return Mathf.Max(3f - 0.1f * curLvl, 0.1f);
@@ -40,6 +42,8 @@ public class EnemySpawner : Singleton<EnemySpawner>
         {
             if (curLvl < INTRO_DIFFIULTY_ENDS_AT_LVL)
                 return 0;
+            else if  (curLvl > 15)
+                return 50;
             return 100 * Math.Clamp(curLvl+5, 1, maxThisLvL) / maxThisLvL;
         }
     }
