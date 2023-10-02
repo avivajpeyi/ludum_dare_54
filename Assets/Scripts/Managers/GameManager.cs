@@ -121,7 +121,13 @@ public class GameManager : Singleton<GameManager>
                 UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
 
         if (Input.GetKeyDown(KeyCode.Equals))
+        {
             DebugMode = !DebugMode;
+            PlayerStats.Instance.damage = PlayerStats.Instance.maxDamage;
+            PlayerStats.Instance.speed = PlayerStats.Instance.maxSpeed;
+            // GameSpotlight.Instance.IncreaseSpotDistance();
+        }
+            
     }
 }
 
