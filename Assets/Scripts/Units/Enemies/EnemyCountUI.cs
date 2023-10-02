@@ -39,8 +39,12 @@ public class EnemyCountUI : MonoBehaviour
             txt.text = String.Format(
                 "Enemy: {0}/{1}",
                 enemySpawner.currentEnemyCount,
-                enemySpawner.maxEnemies
+                enemySpawner.maxThisLvL
             );
+        }
+        else
+        {
+            txt.text = "";
         }
     }
 }

@@ -91,7 +91,7 @@ public class Gun : AttackerBase
             EnemyHealth enemyHealth = shootHit.transform.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                float dmg = damagePerShot + PlayerStats.Instance.GetCurrentDamage();
+                float dmg = damagePerShot + PlayerStats.Instance.damage;
                 enemyHealth.TakeDamage(dmg, shootHit.point);
             }
 

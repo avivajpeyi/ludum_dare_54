@@ -6,17 +6,24 @@ public class EnemyMovement : MovementBase
 {
     Transform player;
     PlayerHealth playerHealth;
-    EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
     GameManager gameManager;
+    
+    [SerializeField] private float baseSpeed = 3.5f;
+    
+    public void SetSpeed(float speed)
+    {
+        nav.speed = speed;
+    }
+    
 
 
     protected override void SetInitReferences()
     {
         playerHealth = FindObjectOfType<PlayerHealth>();
         player = playerHealth.transform;
-        enemyHealth = GetComponent<EnemyHealth>();
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        SetSpeed(baseSpeed);
     }
 
 
@@ -37,5 +44,12 @@ public class EnemyMovement : MovementBase
             nav.isStopped = true;
             // turn off anim
         }
+    }
+
+    public void DisableMovement()
+    {
+        // Delete navmeshagent
+        Destroy(nav);
+        this.enabled = false;
     }
 }

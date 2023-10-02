@@ -5,36 +5,34 @@ using UnityEngine;
 public class PlayerStats : Singleton<PlayerStats>
 {
     [SerializeField] public float speed = 6f;
-    [SerializeField] private float baseDamage = 2f;
+    [SerializeField] public float damage = 2f;
 
-    float currentSpeed = 0;
-    static float currentDamage = 0;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        currentDamage = baseDamage;
-        PlayerPerkEvents.eventBuffDamage += BuffDamage;
-    }
+    [SerializeField] private float maxSpeed = 12f;
+    [SerializeField] private float maxDamage = 100f;
+    public bool AtMaxSpeed => speed >= maxSpeed;
+    public bool AtMaxDamage => damage >= maxDamage;
+    
+    // protected override void Awake()
+    // {
+    //     base.Awake();
+    //     currentDamage = baseDamage;
+    //     // PlayerPerkEvents.eventBuffDamage += BuffDamage;
+    // }
 
 
     private void OnDestroy()
     {
-        PlayerPerkEvents.eventBuffDamage -= BuffDamage;
+        // PlayerPerkEvents.eventBuffDamage -= BuffDamage;
     }
 
-    public void BuffDamage(float damageToBuff)
-    {
-        currentDamage += damageToBuff;
-    }
-
-    public float GetCurrentSpeed()
-    {
-        return currentSpeed;
-    }
-
-    public float GetCurrentDamage()
-    {
-        return currentDamage;
-    }
+    // public void BuffDamage(float damageToBuff)
+    // {
+    //     currentDamage += damageToBuff;
+    // }
+    //
+    //
+    // public float GetCurrentDamage()
+    // {
+    //     return currentDamage;
+    // }
 }

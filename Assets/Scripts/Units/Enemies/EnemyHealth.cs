@@ -24,7 +24,8 @@ public class EnemyHealth : HealthBase
     protected override void Death()
     {
         base.Death();
-        ScoreEvents.AddScore(scoreValue);
+        ScoreManager.Instance.UpdateScore(scoreValue);
+        PlayerLevel.Instance.IncreaseXP(scoreValue);
         StartSinking();
         foreach (Collider c in GetComponents<Collider>())
         {
@@ -38,6 +39,7 @@ public class EnemyHealth : HealthBase
 
     public void StartSinking()
     {
+        GetComponent<EnemyMovement>().DisableMovement();
         
         isSinking = true;
         Destroy(gameObject, 2f);

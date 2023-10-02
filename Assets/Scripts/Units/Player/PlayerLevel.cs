@@ -10,7 +10,7 @@ public class PlayerLevel : Singleton<PlayerLevel>
     public  int currentXP = 0;
     
 
-    public  int XPneeded => Mathf.Max(10,currentLevel * 10);
+    public  int XPneeded => Mathf.Clamp(currentLevel * 10, 10, 150);
     
     
     // On Increase XP Action

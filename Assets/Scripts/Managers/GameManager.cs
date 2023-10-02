@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(FPSComputer))]
 public class GameManager : Singleton<GameManager>
 {
     public static event Action<GameState> OnBeforeStateChanged;
@@ -62,7 +63,19 @@ public class GameManager : Singleton<GameManager>
     {
         // put  textbox with current state in top right corner
         if (DebugMode)
+        {
             GUI.Label(new Rect(10, 10, 100, 20), $"State: {State}");
+            // Add FPS on next line 
+            GUI.Label(new Rect(10, 30, 100, 20), $"FPS: {FPSComputer.Instance.fps}");
+            // Add number of enemies
+            GUI.Label(new Rect(10, 50, 100, 20), 
+                $"Enemies: {EnemySpawner.Instance.currentEnemyCount}/{EnemySpawner.Instance.maxThisLvL}");
+            // Add amount of XP needed
+            GUI.Label(new Rect(10, 70, 100, 20), 
+                $"LVL XP: {PlayerLevel.Instance.currentXP}/{PlayerLevel.Instance.XPneeded}");
+        }
+
+        
     }
 
     private void HandleGameInitialisation()
@@ -104,14 +117,12 @@ public class GameManager : Singleton<GameManager>
         if (State == GameState.Initalisation && Input.anyKeyDown)
             ChangeState(GameState.InGame);
         else if (CanRestart && Input.anyKeyDown)
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+
         if (Input.GetKeyDown(KeyCode.Equals))
             DebugMode = !DebugMode;
     }
-    
-    
-    
 }
 
 

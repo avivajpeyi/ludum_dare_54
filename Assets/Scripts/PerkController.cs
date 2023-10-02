@@ -12,6 +12,7 @@ public class PerkController : MonoBehaviour
     Button damageButton;
     Button viewButton;
     Button speedButton;
+    Button lightButton;
     Button[] myButtons;
 
     CameraManager cameraManager;
@@ -38,10 +39,10 @@ public class PerkController : MonoBehaviour
         damageButton = transform.Find("DMGButton").GetComponent<Button>();
         viewButton = transform.Find("EYEButton").GetComponent<Button>();
         speedButton = transform.Find("SPDButton").GetComponent<Button>();
+        lightButton = transform.Find("LITButton").GetComponent<Button>();
 
         // Populate myButtons array from children
         myButtons = GetComponentsInChildren<Button>(true);
-
 
 
         cameraManager = FindObjectOfType<CameraManager>();
@@ -53,6 +54,7 @@ public class PerkController : MonoBehaviour
         damageButton.onClick.AddListener(IncreaseDMG);
         viewButton.onClick.AddListener(IncreaseView);
         speedButton.onClick.AddListener(IncreaseSpeed);
+        lightButton.onClick.AddListener(IncreaseLight);
 
         DisablePerkMenu();
     }
@@ -66,11 +68,25 @@ public class PerkController : MonoBehaviour
             b.gameObject.SetActive(true);
         }
 
+        if (PlayerStats.Instance.AtMaxSpeed)
+            speedButton.interactable = false;
+
+        if (cameraManager.AtMaxZoom())
+            viewButton.interactable = false;
+
+        if (PlayerStats.Instance.AtMaxDamage)
+            damageButton.interactable = false;
+
         Debug.Log("Perk Menu Enabled");
     }
 
     public void DisablePerkMenu()
     {
+       
+        // if myButtons is null, return
+        if (myButtons == null)
+            return;
+        
         // hide menu
         foreach (var b in myButtons)
         {
@@ -130,7 +146,7 @@ public class PerkController : MonoBehaviour
     public void IncreaseDMG()
     {
         float damageToBuff = 1f;
-        PlayerStats.Instance.BuffDamage(damageToBuff);
+        PlayerStats.Instance.damage += damageToBuff;
         DisablePerkMenu();
         GameManager.Instance.ChangeState(GameState.InGame);
     }
@@ -144,14 +160,17 @@ public class PerkController : MonoBehaviour
 
     public void IncreaseView()
     {
-        if (cameraManager.AtMaxZoom())
-            viewButton.interactable = false;
-        else
-        {
-            float IncreaseViewAmount = 1f;
-            PlayerPerkEvents.IncreaseView(IncreaseViewAmount);
-            DisablePerkMenu();
-            GameManager.Instance.ChangeState(GameState.InGame);
-        }
+        float IncreaseViewAmount = 1f;
+        PlayerPerkEvents.IncreaseView(IncreaseViewAmount);
+        DisablePerkMenu();
+        GameManager.Instance.ChangeState(GameState.InGame);
+    }
+
+    public void IncreaseLight()
+    {
+        float IncreaseLightAmount = 2f;
+        GameSpotlight.Instance.IncreaseSpotDistance();
+        DisablePerkMenu();
+        GameManager.Instance.ChangeState(GameState.InGame);
     }
 }

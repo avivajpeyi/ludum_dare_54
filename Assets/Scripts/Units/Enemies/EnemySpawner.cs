@@ -9,11 +9,39 @@ public class EnemySpawner : Singleton<EnemySpawner>
     // Editor fields
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject[] enemyPrefabs;
-    [SerializeField] private float spawnDelay = 3f;
 
-    public int maxEnemies
+    int MAX_ENEMIES = 50;
+    int INTRO_DIFFIULTY_ENDS_AT_LVL = 5;
+    
+    
+    private float spawnDelay
     {
-        get { return Mathf.Max(50, 10 + 5 * PlayerLevel.Instance.currentLevel); }
+        get
+        {
+            if (curLvl < INTRO_DIFFIULTY_ENDS_AT_LVL)
+                return 3f;
+            else
+            {
+                return Mathf.Max(3f - 0.1f * curLvl, 0.1f);
+            }
+        }
+    }
+
+    int curLvl => PlayerLevel.Instance.currentLevel;
+
+    public int maxThisLvL
+    {
+        get { return Mathf.Clamp(10 + 5 * curLvl, 10, MAX_ENEMIES); }
+    }
+
+    public int probOfFastEnemy
+    {
+        get
+        {
+            if (curLvl < INTRO_DIFFIULTY_ENDS_AT_LVL)
+                return 0;
+            return 100 * Math.Clamp(curLvl+5, 1, maxThisLvL) / maxThisLvL;
+        }
     }
 
     // Make getter for currentEnemyCount public, setter private
@@ -30,7 +58,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
         {
             return (
                 GameManager.Instance.State == GameState.InGame &&
-                currentEnemyCount < maxEnemies &&
+                currentEnemyCount < maxThisLvL &&
                 Time.time - _lastSpawnTime > spawnDelay
             );
         }
@@ -46,7 +74,6 @@ public class EnemySpawner : Singleton<EnemySpawner>
         {
             t.GetComponent<MeshRenderer>().enabled = false;
         }
-        
     }
 
     private void OnDestroy()
@@ -65,7 +92,7 @@ public class EnemySpawner : Singleton<EnemySpawner>
 
     void SpawnEnemy()
     {
-        if (currentEnemyCount >= maxEnemies)
+        if (currentEnemyCount >= maxThisLvL)
         {
             return;
         }
@@ -73,9 +100,17 @@ public class EnemySpawner : Singleton<EnemySpawner>
         int randomIndex = Random.Range(0, spawnPoints.Length);
         int randomEnemy = Random.Range(0, enemyPrefabs.Length);
         GameObject e = Instantiate(enemyPrefabs[randomEnemy], spawnPoints[randomIndex]
-        .position,
+                .position,
             Quaternion.identity);
+
         e.name = $"enemy_{currentEnemyCount:000}";
+        if (Random.Range(0, 100) < probOfFastEnemy)
+        {
+            float newspeed = Random.Range(4f, 7f);
+            e.GetComponent<EnemyMovement>().SetSpeed(newspeed);
+            e.name = $"enemy_{currentEnemyCount:000}_fast";
+        }
+
         currentEnemyCount++;
         _lastSpawnTime = Time.time;
         OnEnemySpawned?.Invoke();
