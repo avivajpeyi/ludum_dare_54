@@ -44,7 +44,7 @@ public class GameManager : Singleton<GameManager>
                 HandleInGameState();
                 break;
             case GameState.InUpgrades:
-                HandleInGameState();
+                HandleInUpgrades();
                 break;
             case GameState.GameOver:
                 HandleGameOver();
@@ -73,6 +73,12 @@ public class GameManager : Singleton<GameManager>
             // Add amount of XP needed
             GUI.Label(new Rect(10, 70, 100, 20), 
                 $"LVL XP: {PlayerLevel.Instance.currentXP}/{PlayerLevel.Instance.XPneeded}");
+            // Add Base damage on next line
+            GUI.Label(new Rect(10, 90, 100, 20), $"Damage: {PlayerStats.Instance.damage}");
+            // Add Base speed on next line
+            GUI.Label(new Rect(10, 110, 100, 20), $"Speed: {PlayerStats.Instance.speed}");
+            // Add time
+            GUI.Label(new Rect(Screen.width - 100, 0, 100, 50), Timer.Instance.time);
         }
 
         
@@ -96,11 +102,13 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleInUpgrades()
     {
+        Timer.Instance.Pause();
         PauseManager.gameIsPaused = true;
     }
 
     private void HandleInGameState()
     {
+        Timer.Instance.Resume();
         PauseManager.gameIsPaused = false;
     }
 
@@ -123,11 +131,15 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.Equals))
         {
             DebugMode = !DebugMode;
-            PlayerStats.Instance.damage = PlayerStats.Instance.maxDamage;
-            PlayerStats.Instance.speed = PlayerStats.Instance.maxSpeed;
             GameSpotlight.Instance.IncreaseSpotDistance();
         }
-            
+
+        if (Input.GetKeyDown(KeyCode.Minus) && DebugMode)
+        {
+            PlayerStats.Instance.damage = PlayerStats.Instance.maxDamage;
+            PlayerStats.Instance.speed = PlayerStats.Instance.maxSpeed;
+        }
+
     }
 }
 

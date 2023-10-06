@@ -39,12 +39,12 @@ public class GameStateUI : StaticInstance<GameStateUI>
     public void SetStartUi()
     {
         txt.text = startText;
-        img.color = new Color(0, 0, 0, 1);
+        img.color = new Color(0, 0, 0, 204/255f);
     }
 
     public void SetGameOverUi()
     {
         txt.text = gameOverText;
-        img.color = new Color(0, 0, 0, 1);
+        img.color = new Color(0, 0, 0, 204/255f);
     }
 }

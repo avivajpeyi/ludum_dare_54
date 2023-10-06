@@ -9,11 +9,13 @@ public class PlayerWeaponsManager : Singleton<PlayerWeaponsManager>
         new Dictionary<WeaponNames, GameObject>();
     
 
-    WeaponNames activeWeapon = WeaponNames.Pistol;
+    public WeaponNames activeWeapon = WeaponNames.Pistol;
 
     List<WeaponNames> weaponsAvailible = new List<WeaponNames>();
 
 
+    
+    
     private void Awake()
     {
         base.Awake();

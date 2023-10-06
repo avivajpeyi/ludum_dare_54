@@ -16,12 +16,10 @@ public class ActivateRandomComponent : MonoBehaviour
             go.SetActive(false);
         }
         int randomIndex = Random.Range(0, gos.Count);
-        gos[randomIndex].SetActive(true);        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        gos[randomIndex].SetActive(true); 
         
+        // remove this script
+        Destroy(this);
     }
+    
 }

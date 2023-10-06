@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using DG.Tweening;
+using UnityEngine;
+
 
 [RequireComponent(typeof(ParticleSystem))]
 [RequireComponent(typeof(LineRenderer))]
@@ -25,7 +28,12 @@ public class Gun : AttackerBase
     LineRenderer gunLine;
     Light gunLight;
     float effectsDisplayTime = 0.2f;
+    private float lightIntensity; 
+    Sequence lightSequence;
+    private CinemachineImpulseSource cameraImpulseSource;
 
+    [SerializeField]
+    private float shakeAmplitude = 0.5f;
     [SerializeField] private AudioClip sfx;
 
 
@@ -38,9 +46,27 @@ public class Gun : AttackerBase
         gunParticles = GetComponent<ParticleSystem>();
         gunLine = GetComponent<LineRenderer>();
         gunLight = GetComponent<Light>();
+        cameraImpulseSource = GetComponent<CinemachineImpulseSource>();
+        lightIntensity = gunLight.intensity;
+        CreateFlashTween();
+        gunLight.intensity = 0;
 
         // Make sure gunLine has numBulletsInShot *2 positions
         gunLine.positionCount = numBulletsInShot * 2;
+    }
+
+    void CreateFlashTween()
+    {
+        lightSequence = DOTween.Sequence();
+        lightSequence.Append(
+            gunLight.DOIntensity(
+                
+                0 ,
+                effectsDisplayTime* 2)
+        );
+        // lightSequence.OnComplete((() => Debug.Log("Light tween complete")));
+        lightSequence.SetAutoKill(false);
+        lightSequence.Pause();
     }
 
 
@@ -72,7 +98,7 @@ public class Gun : AttackerBase
     public void DisableEffects()
     {
         gunLine.enabled = false;
-        gunLight.enabled = false;
+        // gunLight.enabled = false;
     }
 
 
@@ -108,12 +134,24 @@ public class Gun : AttackerBase
         timer = 0f;
 
         AudioSystem.Instance.PlaySound(sfx);
-        gunLight.enabled = true;
-
+        // gunLight.enabled = true;
+        FlashGunLight();
+        
+        CameraManager.Instance.Shake(cameraImpulseSource, shakeAmplitude);
+        
         gunParticles.Stop();
         gunParticles.Play();
         gunLine.enabled = true;
 
         _fireBulletIdx(0);
     }
+    
+    void FlashGunLight()
+    {
+        gunLight.intensity = lightIntensity;
+        lightSequence.Restart();
+        // lightSequence.Play();
+    }
+    
+    
 }

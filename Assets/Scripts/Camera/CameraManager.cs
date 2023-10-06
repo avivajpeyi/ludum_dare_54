@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
     [SerializeField] private CinemachineVirtualCamera[] vcams;
 
@@ -13,7 +13,9 @@ public class CameraManager : MonoBehaviour
     // current cam idx
     private int camIdx = 0;
 
-    private void Awake() {
+    private void Awake()
+    {
+        base.Awake();
         PlayerPerkEvents.eventIncreaseView += IncreaseCamera;
     }
 
@@ -37,10 +39,7 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if (!debugMode)
-            return;
-
-        if (Input.GetKeyDown(KeyCode.U))
+        if (!debugMode && Input.GetKeyDown(KeyCode.U))
             IncreaseCamera();
     }
 
@@ -71,5 +70,11 @@ public class CameraManager : MonoBehaviour
             else
                 vcams[i].Priority = 0;
         }
+    }
+    
+    public void Shake(CinemachineImpulseSource impulseSource, float magnitude = 1f)
+    {
+        Debug.Log("Shake()");
+        impulseSource.GenerateImpulseWithForce(magnitude);
     }
 }

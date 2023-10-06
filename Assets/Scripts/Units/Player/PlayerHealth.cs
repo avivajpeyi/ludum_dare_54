@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Cinemachine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class PlayerHealth : HealthBase
 {
+    
+    CinemachineImpulseSource impulseSource;
     public Slider healthSlider;
     bool healthSliderPresent = false;
     public Image damageImage;
@@ -32,6 +35,8 @@ public class PlayerHealth : HealthBase
             healthSlider.maxValue = startingHealth;
             healthSlider.value = startingHealth;
         }
+
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
 
@@ -62,9 +67,12 @@ public class PlayerHealth : HealthBase
     public void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
+        CameraManager.Instance.Shake(impulseSource, 1f);
         if (healthSliderPresent)
             healthSlider.value = currentHealth;
+        
     }
+    
 
 
     protected override void Death()

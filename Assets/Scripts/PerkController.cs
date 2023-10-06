@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PerkController : MonoBehaviour
 {
+    
+    [SerializeField]
+    ParticleSystem FX;
+    
     Button uziButton;
     Button rifleButton;
     Button sniperButton;
@@ -14,8 +18,11 @@ public class PerkController : MonoBehaviour
     Button speedButton;
     Button lightButton;
     Button[] myButtons;
+    
+    AudioClip selectionAudioClip;
 
     CameraManager cameraManager;
+
 
     private void Awake()
     {
@@ -56,7 +63,9 @@ public class PerkController : MonoBehaviour
         speedButton.onClick.AddListener(IncreaseSpeed);
         lightButton.onClick.AddListener(IncreaseLight);
 
-        DisablePerkMenu();
+        selectionAudioClip = Resources.Load<AudioClip>("audio/upgrade");
+        
+        DisablePerkMenu(playFX:false);
     }
 
 
@@ -68,6 +77,8 @@ public class PerkController : MonoBehaviour
             b.gameObject.SetActive(true);
         }
 
+        
+        
         if (PlayerStats.Instance.AtMaxSpeed)
             speedButton.interactable = false;
 
@@ -76,11 +87,21 @@ public class PerkController : MonoBehaviour
 
         if (PlayerStats.Instance.AtMaxDamage)
             damageButton.interactable = false;
+        
+        // TODO put buttons in a dict/list and loop through them
+        if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Uzi)
+            uziButton.interactable = false;
+        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Rifle)
+            rifleButton.interactable = false;
+        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Sniper)
+            sniperButton.interactable = false;
+        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Pistol)
+            pistolButton.interactable = false;
 
         Debug.Log("Perk Menu Enabled");
     }
 
-    public void DisablePerkMenu()
+    public void DisablePerkMenu(bool playFX=true)
     {
        
         // if myButtons is null, return
@@ -93,7 +114,16 @@ public class PerkController : MonoBehaviour
             b.gameObject.SetActive(false);
         }
 
-        Debug.Log("Perk Menu Enabled");
+
+        if (playFX)
+        {
+            FX.Play();
+            AudioSystem.Instance.PlaySound(selectionAudioClip, 0.3f);
+            
+        }
+            
+        
+        Debug.Log("Perk Menu disabled");
     }
 
 
@@ -106,7 +136,7 @@ public class PerkController : MonoBehaviour
         }
         else
         {
-            DisablePerkMenu();
+            DisablePerkMenu(false);
             Debug.Log($"OnSetting {state}: Perk Menu Disabled");
         }
     }
@@ -117,7 +147,6 @@ public class PerkController : MonoBehaviour
     public void ChangeToUzi()
     {
         PlayerWeaponsManager.Instance.ChangeWeapon(WeaponNames.Uzi);
-
         DisablePerkMenu();
         GameManager.Instance.ChangeState(GameState.InGame);
     }
