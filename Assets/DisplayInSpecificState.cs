@@ -5,8 +5,8 @@ using UnityEngine;
 public class DisplayInUpgradesPage : MonoBehaviour
 {
     // Start is called before the first frame update
-    
-    
+    [SerializeField]
+    private GameState stateToDisplayIn = GameState.InUpgrades;
     
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class DisplayInUpgradesPage : MonoBehaviour
     
     void OnStateChanged(GameState state)
     {
-        if (state == GameState.InUpgrades)
+        if (state == stateToDisplayIn)
         {
             gameObject.SetActive(true);
         }

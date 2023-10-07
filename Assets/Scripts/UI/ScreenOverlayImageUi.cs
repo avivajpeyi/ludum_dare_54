@@ -6,11 +6,7 @@ using UnityEngine.UI;
 
 public class GameStateUI : StaticInstance<GameStateUI>
 {
-    [SerializeField] private string startText = "Press any key to start";
-    [SerializeField] private string gameOverText = "Game Over!";
-
-
-    private TMP_Text txt;
+    
     private Image img;
 
     private void Awake()
