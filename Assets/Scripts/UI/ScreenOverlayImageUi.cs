@@ -4,43 +4,35 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameStateUI : StaticInstance<GameStateUI>
+public class ScreenOverlayImageUi : StaticInstance<ScreenOverlayImageUi>
 {
     
     private Image img;
 
+    [SerializeField]
+    Color inGameColor = new Color(0, 0, 0, 0);
+    [SerializeField]
+    Color otherStateColor = new Color(0, 0, 0, 204/255f);
+    
     private void Awake()
     {
         GameManager.OnBeforeStateChanged += OnStateChanged;
         img = GetComponent<Image>();
-        txt = GetComponentInChildren<TMP_Text>();
-        SetStartUi();
+        img.color = otherStateColor;
     }
 
     private void OnDestroy() => GameManager.OnBeforeStateChanged -= OnStateChanged;
 
     private void OnStateChanged(GameState newState)
     {
-        if (newState == GameState.Initalisation) SetStartUi();
-        else if (newState == GameState.GameOver) SetGameOverUi();
+        if (newState == GameState.Initalisation || newState == GameState.GameOver)
+        {
+            img.color = otherStateColor;
+        }
         else
         {
-            txt.text = "";
-            img.color = new Color(0, 0, 0, 0);
+            img.color = inGameColor;
         }
     }
-
     
-
-    public void SetStartUi()
-    {
-        txt.text = startText;
-        img.color = new Color(0, 0, 0, 204/255f);
-    }
-
-    public void SetGameOverUi()
-    {
-        txt.text = gameOverText;
-        img.color = new Color(0, 0, 0, 204/255f);
-    }
 }

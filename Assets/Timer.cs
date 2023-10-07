@@ -12,7 +12,7 @@ public class Timer : Singleton<Timer>
         {
             int minutes = Mathf.FloorToInt(currentTime / 60);
             int seconds = Mathf.FloorToInt(currentTime % 60);
-            return string.Format("{0:00}:{1:00}", minutes, seconds);
+            return string.Format("[{0:00}:{1:00}]", minutes, seconds);
         }
     }
 

@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine;
 using Dan.Main;
 
+// https://danqzq.itch.io/leaderboard-creator
+
 
 public class Leaderboard : Singleton<Leaderboard>
 {
@@ -22,21 +24,33 @@ public class Leaderboard : Singleton<Leaderboard>
         LeaderboardCreator.GetLeaderboard(publicKey, ((msg) =>
         {
             Debug.Log($"Number items in leaderboard: {msg.Length}");
-            int loopCount = msg.Length < boardTxtItems.Count
+            int numToDisplay = msg.Length < boardTxtItems.Count
                 ? msg.Length
                 : boardTxtItems.Count;
-            for (int i = 0; i < loopCount; i++)
+            
+            
+            for (int i = 0; i < boardTxtItems.Count; i++)
             {
-                Debug.Log($">> {msg[i].Username} {msg[i].Score}");
-                String usn = msg[i].Username.PadRight(10, ' ');
-                String scr = msg[i].Score.ToString().PadLeft(2, '0');
-                String ext = msg[i].Extra;
-                boardTxtItems[i].text = $"{i + 1:00}) {usn}\t: {scr}\t [{ext}]";
+                if (i < numToDisplay)
+                {
+                    Debug.Log($">> {msg[i].Username} {msg[i].Score}");
+                    String usn = msg[i].Username.PadRight(10, ' ');
+                    String scr = msg[i].Score.ToString().PadLeft(2, '0');
+                    String ext = msg[i].Extra;
+                    boardTxtItems[i].text = $"{i + 1:00}) {usn}\t {scr}\t [{ext}]";
+                }
+                else
+                {
+                    // hide the TMP_Text game object
+                    boardTxtItems[i].gameObject.SetActive(false);
+                    
+                }
+                
             }
         }));
     }
 
-    public void SetLeaderboard(string username, int score)
+    public void SetLeaderboard(string username, int score, string time)
     {
         if (username.Length > 10)
         {
@@ -45,8 +59,13 @@ public class Leaderboard : Singleton<Leaderboard>
             username = username.Substring(0, 10);
         }
 
-        Debug.Log($"Submitting score... {username} {score}");
-        LeaderboardCreator.UploadNewEntry(publicKey, username, score, OnUploadComplete);
+        Debug.Log($"Submitting score... {username} {score} {time}");
+        LeaderboardCreator.UploadNewEntry(
+            publicKey, 
+            username,
+            score,
+            time,
+            OnUploadComplete);
     }
 
     public void OnUploadComplete(bool success)

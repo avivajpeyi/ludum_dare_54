@@ -6,15 +6,11 @@ using UnityEngine.Events;
 
 public class UserLeaderboardInput : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI scoreText;
+    // [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TMP_InputField nameInput;
 
     public void SubmitScore()
     {
-        
-        Leaderboard.Instance.SetLeaderboard(
-            nameInput.text,
-            int.Parse(scoreText.text)
-        );
+        Leaderboard.Instance.SetLeaderboard(nameInput.text, PlayerLevel.Instance.currentLevel, Timer.Instance.time);
     }
 }

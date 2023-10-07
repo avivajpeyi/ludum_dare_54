@@ -19,6 +19,8 @@ public class PerkController : MonoBehaviour
     Button lightButton;
     Button[] myButtons;
     
+    Dictionary<WeaponNames, Button> gunButtons;
+
     AudioClip selectionAudioClip;
 
     CameraManager cameraManager;
@@ -47,6 +49,14 @@ public class PerkController : MonoBehaviour
         viewButton = transform.Find("EYEButton").GetComponent<Button>();
         speedButton = transform.Find("SPDButton").GetComponent<Button>();
         lightButton = transform.Find("LITButton").GetComponent<Button>();
+
+        gunButtons = new Dictionary<WeaponNames, Button>()
+        {
+            {WeaponNames.Uzi, uziButton},
+            {WeaponNames.Rifle, rifleButton},
+            {WeaponNames.Sniper, sniperButton},
+            {WeaponNames.Pistol, pistolButton}
+        };
 
         // Populate myButtons array from children
         myButtons = GetComponentsInChildren<Button>(true);
@@ -88,15 +98,14 @@ public class PerkController : MonoBehaviour
         if (PlayerStats.Instance.AtMaxDamage)
             damageButton.interactable = false;
         
-        // TODO put buttons in a dict/list and loop through them
-        if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Uzi)
-            uziButton.interactable = false;
-        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Rifle)
-            rifleButton.interactable = false;
-        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Sniper)
-            sniperButton.interactable = false;
-        else if (PlayerWeaponsManager.Instance.activeWeapon == WeaponNames.Pistol)
-            pistolButton.interactable = false;
+        // iterate through gun buttons and disable the one that is active
+        foreach (var gunButton in gunButtons)
+        {
+            if (gunButton.Key == PlayerWeaponsManager.Instance.activeWeapon)
+                gunButton.Value.interactable = false;
+            else
+                gunButton.Value.interactable = true;
+        }
 
         Debug.Log("Perk Menu Enabled");
     }

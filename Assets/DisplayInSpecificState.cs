@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisplayInUpgradesPage : MonoBehaviour
+public class DisplayInSpecificState : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
@@ -14,6 +15,12 @@ public class DisplayInUpgradesPage : MonoBehaviour
         GameManager.OnBeforeStateChanged += OnStateChanged;
     }
 
+    private void Start()
+    {
+        SetActiveIfCorrectState(GameManager.Instance.State);
+    }
+    
+
     private void OnDestroy()
     {
         // PlayerPerkEvents.eventLevelUp -= EnablePerkMenu;
@@ -21,6 +28,11 @@ public class DisplayInUpgradesPage : MonoBehaviour
     }
     
     void OnStateChanged(GameState state)
+    {
+        SetActiveIfCorrectState(state);
+    }
+
+    void SetActiveIfCorrectState(GameState state)
     {
         if (state == stateToDisplayIn)
         {

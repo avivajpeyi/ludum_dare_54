@@ -74,9 +74,12 @@ public class GameManager : Singleton<GameManager>
             GUI.Label(new Rect(10, 70, 100, 20), 
                 $"LVL XP: {PlayerLevel.Instance.currentXP}/{PlayerLevel.Instance.XPneeded}");
             // Add Base damage on next line
-            GUI.Label(new Rect(10, 90, 100, 20), $"Damage: {PlayerStats.Instance.damage}");
+            GUI.Label(new Rect(10, 90, 100, 20),
+                $"Damage: {PlayerStats.Instance.damage}/{PlayerStats.Instance.maxDamage}");
             // Add Base speed on next line
-            GUI.Label(new Rect(10, 110, 100, 20), $"Speed: {PlayerStats.Instance.speed}");
+            GUI.Label(new Rect(10, 110, 100, 20), 
+                $"Speed: {PlayerStats.Instance.speed}/{PlayerStats.Instance.maxSpeed}");
+                
             // Add time
             GUI.Label(new Rect(Screen.width - 100, 0, 100, 50), Timer.Instance.time);
         }
@@ -120,13 +123,13 @@ public class GameManager : Singleton<GameManager>
     }
 
 
+    
+
     private void Update()
     {
         if (State == GameState.Initalisation && Input.anyKeyDown)
             ChangeState(GameState.InGame);
-        else if (CanRestart && Input.anyKeyDown)
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-                UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+
 
         if (Input.GetKeyDown(KeyCode.Equals))
         {
